@@ -1,0 +1,47 @@
+{
+  "name": "getonecms/admin",
+  "description": "OneCMS admin module",
+  "type": "project",
+  "authors": [
+    {
+      "name": "Mohammed Shifreen",
+      "email": "mshifreen@gmail.com"
+    }
+  ],
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "require": {
+    "php": ">=7.4",
+    "getonecms/base": "dev-master"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "^9.5",
+    "yiisoft/yii2-debug": "~2.1.0",
+    "yiisoft/yii2-gii": "~2.1.0",
+    "yiisoft/yii2-faker": "~2.0.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "OneCMS\\Admin\\": "src"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "OneCMS\\Admin\\Test\\": "test"
+    }
+  },
+  "optimize-autoloader": true,
+  "repositories": [
+    {
+      "type": "path",
+      "url": "../base",
+      "options": {
+        "symlink": true
+      }
+    },
+    {
+      "type": "composer",
+      "url": "https://asset-packagist.org"
+    }
+  ]
+}
