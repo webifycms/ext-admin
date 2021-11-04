@@ -1,8 +1,8 @@
 # phpstorm project files
-.idea
+/.idea
 
 # vscode project files
-.vscode
+/.vscode
 
 # netbeans project files
 nbproject
@@ -16,12 +16,12 @@ nbproject
 Thumbs.db
 
 # composer
-/vendor
-/composer.lock
+/vendor/
+composer.lock
 composer.phar
 
 # node
-/node_modules
+/node_modules/
 
 # Mac DS_Store Files
 .DS_Store
