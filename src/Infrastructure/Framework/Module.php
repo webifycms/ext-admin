@@ -3,8 +3,7 @@ declare(strict_types=1);
 
 namespace OneCMS\Admin\Infrastructure\Framework;
 
-
-use OneCMS\Admin\Infrastructure\Presentation\Admin\Asset\AdminAsset;
+use OneCMS\Admin\Presentation\Web\Admin\Asset\AdminAsset;
 use OneCMS\Base\Infrastructure\Framework\Theme\ThemeInterface;
 use RuntimeException;
 use Throwable;
@@ -22,7 +21,7 @@ use yii\web\View;
 class Module extends BaseModule
 {
     public $basePath = '@Admin';
-    public $controllerNamespace = 'OneCMS\\Admin\\Infrastructure\\Presentation\\Admin\\Controller';
+    public $controllerNamespace = 'OneCMS\Admin\Presentation\Web\Admin\Controller';
     public $defaultRoute = 'dashboard';
     public $layout = 'main';
 

@@ -1,8 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace OneCMS\Admin\Infrastructure\Presentation\Admin\Controller;
-
+namespace OneCMS\Admin\Presentation\Web\Admin\Controller;
 
 use yii\web\Controller;
 
