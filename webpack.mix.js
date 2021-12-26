@@ -12,6 +12,6 @@ mix.js("resources/assets/js/app.js", "js")
             './templates/admin/**/*.php',
             './templates/**/*.php',
         ],
-        proxy: 'getonecms.test/app/public/'
+        proxy: 'getonecms.test'
     })
     .copy('node_modules/bootstrap-icons/bootstrap-icons.svg', 'dist/icons/icons.svg')
