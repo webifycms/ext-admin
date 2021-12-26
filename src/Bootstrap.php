@@ -3,7 +3,6 @@ declare(strict_types=1);
 
 namespace OneCMS\Admin;
 
-
 use OneCMS\Admin\Infrastructure\Framework\Administration\Administration;
 use OneCMS\Admin\Infrastructure\Framework\Administration\AdministrationMenu;
 use OneCMS\Admin\Infrastructure\Framework\Module;
@@ -27,7 +26,7 @@ class Bootstrap extends AbstractBootstrap implements RegisterDependencyBootstrap
     /**
      * @var string
      */
-    private string $administrationPath = 'administration';
+    private string $administrationPath;
 
     /**
      * @inheritDoc
@@ -45,10 +44,10 @@ class Bootstrap extends AbstractBootstrap implements RegisterDependencyBootstrap
      */
     public function init(WebApplicationInterface $app): void
     {
+        $this->administrationPath = $app->getConfig()->get('administrationPath') ?? $app->getAdministration()->getPath();
+        
         parent::init($app);
         set_alias('@Admin', dirname(__DIR__));
-
-        $this->administrationPath = $app->getConfig()->get('administrationPath');
 
         $app->set('modules', [
             $this->administrationPath => ['class' => Module::class]
