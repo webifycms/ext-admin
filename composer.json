@@ -1,7 +1,7 @@
 {
-  "name": "getonecms/admin-module",
-  "description": "OneCMS admin module",
-  "type": "project",
+  "name": "getonecms/admin",
+  "description": "OneCMS admin extension",
+  "type": "onecms-ext",
   "authors": [
     {
       "name": "Mohammed Shifreen",
@@ -11,8 +11,7 @@
   "minimum-stability": "dev",
   "prefer-stable": true,
   "require": {
-    "php": ">=7.4",
-    "getonecms/base-module": "dev-master"
+    "php": ">=7.4"
   },
   "require-dev": {
     "phpunit/phpunit": "^9.5"
@@ -29,10 +28,6 @@
   },
   "optimize-autoloader": true,
   "repositories": [
-    {
-      "type": "path",
-      "url": "../base"
-    },
     {
       "type": "composer",
       "url": "https://asset-packagist.org"
