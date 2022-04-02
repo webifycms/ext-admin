@@ -1,5 +1,5 @@
 {
-  "name": "getonecms/admin",
+  "name": "getonecms/ext-admin",
   "description": "OneCMS admin extension",
   "type": "onecms-extension",
   "authors": [
