@@ -3,19 +3,18 @@ declare(strict_types=1);
 
 namespace OneCMS\Admin\Infrastructure\Framework\Administration;
 
-use OneCMS\Base\Application\Administration\AdministrationMenuInterface;
-use OneCMS\Base\Infrastructure\Framework\Web\Application\WebApplicationInterface;
+use OneCMS\Base\Infrastructure\Service\Application\WebApplicationServiceInterface;
 use yii\web\View;
 
 /**
  * Class AdministrationMenu
  *
  * @package getonecms/admin
- * @varsion 0.0.1
+ * @version 0.0.1
  * @since   0.0.1
  * @author  Mohammed Shifreen
  */
-class AdministrationMenu implements AdministrationMenuInterface
+class AdministrationMenu
 {
     /**
      * @var View
@@ -23,11 +22,11 @@ class AdministrationMenu implements AdministrationMenuInterface
     private View $view;
 
     /**
-     * @param WebApplicationInterface $app
+     * @param WebApplicationServiceInterface $app
      */
-    public function __construct(WebApplicationInterface $app)
+    public function __construct(WebApplicationServiceInterface $app)
     {
-        $this->view = $app->getComponent()->getView();
+        $this->view = $app->getApplication()->getView();
     }
 
     /**

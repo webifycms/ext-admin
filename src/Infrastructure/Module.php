@@ -1,20 +1,21 @@
 <?php
+
 declare(strict_types=1);
 
-namespace OneCMS\Admin\Infrastructure\Framework;
+namespace OneCMS\Admin\Infrastructure;
 
-use OneCMS\Admin\Presentation\Web\Admin\Asset\AdminAsset;
-use OneCMS\Base\Infrastructure\Framework\Theme\ThemeInterface;
 use RuntimeException;
 use Throwable;
+use OneCMS\Admin\Presentation\Web\Admin\Asset\AdminAsset;
+use OneCMS\Base\Infrastructure\Framework\Theme\ThemeInterface;
 use yii\base\Module as BaseModule;
 use yii\web\View;
 
 /**
- * Class Module
+ * Module
  *
- * @package getonecms/admin
- * @varsion 0.0.1
+ * @package getonecms/ext-admin
+ * @version 0.0.1
  * @since   0.0.1
  * @author  Mohammed Shifreen
  */

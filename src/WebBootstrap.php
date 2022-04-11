@@ -1,33 +1,29 @@
 <?php
+
 declare(strict_types=1);
 
 namespace OneCMS\Admin;
 
+use OneCMS\Base\Infrstructure\Service\Bootstrap\WebBootstrapService;
 use OneCMS\Admin\Infrastructure\Framework\Administration\Administration;
 use OneCMS\Admin\Infrastructure\Framework\Administration\AdministrationMenu;
 use OneCMS\Admin\Infrastructure\Framework\Module;
 use OneCMS\Base\Application\Administration\AdministrationInterface;
 use OneCMS\Base\Application\Administration\AdministrationMenuInterface;
-use OneCMS\Base\Infrastructure\Framework\Bootstrap\AbstractBootstrap;
-use OneCMS\Base\Infrastructure\Framework\Bootstrap\RegisterDependencyBootstrapInterface;
-use OneCMS\Base\Infrastructure\Framework\Bootstrap\RegisterRoutesBootstrapInterface;
-use OneCMS\Base\Infrastructure\Framework\Web\Application\WebApplicationInterface;
+use OneCMS\Base\Infrastructure\Service\Bootstrap\RegisterDependencyBootstrapInterface;
+use OneCMS\Base\Infrastructure\Service\Bootstrap\RegisterRoutesBootstrapInterface;
+use OneCMS\Base\Infrastructure\Service\Application\WebApplicationServiceInterface;
 
 /**
- * Class Bootstrap
+ * WebBootstrap
  *
- * @package getonecms/admin
- * @varsion 0.0.1
+ * @package getonecms/ext-admin
+ * @version 0.0.1
  * @since   0.0.1
  * @author  Mohammed Shifreen
  */
-class Bootstrap extends AbstractBootstrap implements RegisterDependencyBootstrapInterface, RegisterRoutesBootstrapInterface
+class WebBootstrap extends WebBootstrapService implements RegisterDependencyBootstrapInterface, RegisterRoutesBootstrapInterface
 {
-    /**
-     * @var string
-     */
-    private string $administrationPath;
-
     /**
      * @inheritDoc
      */
@@ -40,23 +36,23 @@ class Bootstrap extends AbstractBootstrap implements RegisterDependencyBootstrap
     }
 
     /**
-     * @param WebApplicationInterface $app
+     * @inheritdoc
      */
-    public function init(WebApplicationInterface $app): void
+    public function init(WebApplicationServiceInterface $app): void
     {
-        $this->administrationPath = $app->getConfig()->get('administrationPath') ?? $app->getAdministration()->getPath();
-        
         parent::init($app);
         set_alias('@Admin', dirname(__DIR__));
 
-        $app->set('modules', [
-            $this->administrationPath => ['class' => Module::class]
+        $adminPath = $app->getAdministrationPath();
+
+        $app->setApplicaitonProperty('modules', [
+            $adminPath => ['class' => Module::class]
         ]);
-        $app->getAdministration()->getMenu()->addItems([
+        $app->getAdministration()->setMenuItems([
             [
                 'label' => 'Dashboard',
                 'icon' => 'speedometer',
-                'route' => ["/$this->administrationPath"],
+                'route' => ["/$adminPath"],
                 'position' => 0,
             ],
             [

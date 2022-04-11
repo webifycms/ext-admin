@@ -1,23 +1,23 @@
 <?php
+
 declare(strict_types=1);
 
 namespace OneCMS\Admin\Infrastructure\Framework\Administration;
 
-use OneCMS\Base\Application\Administration\AdministrationInterface;
-use OneCMS\Base\Application\Administration\AdministrationMenuInterface;
-use OneCMS\Base\Infrastructure\Framework\Web\Application\WebApplicationInterface;
+use OneCMS\Base\Domain\Service\Administration\AdministrationServiceInterface;
+use OneCMS\Base\Infrastructure\Service\Application\WebApplicationServiceInterface;
 
 /**
- * Class Administration
+ * Administration
  *
  * TODO: Add support to the sub-domain if possible. The administration currently supports only sub-path url pattern.
  *
- * @package getonecms/admin
+ * @package getonecms/ext-admin
  * @version 0.0.1
  * @since   0.0.1
  * @author  Mohammed Shifreen
  */
-class Administration implements AdministrationInterface
+class Administration implements AdministrationServiceInterface
 {
     /**
      * @var string
@@ -32,24 +32,24 @@ class Administration implements AdministrationInterface
      */
     private bool $inAdministration = false;
     /**
-     * @var AdministrationMenuInterface
+     * @var AdministrationMenu
      */
-    private AdministrationMenuInterface $menu;
+    private AdministrationMenu $menu;
 
     /**
-     * @param WebApplicationInterface $app
-     * @param AdministrationMenuInterface $menu
+     * @param WebApplicationServiceInterface $app
      */
-    public function __construct(WebApplicationInterface $app, AdministrationMenuInterface $menu)
+    public function __construct(WebApplicationServiceInterface $app, AdministrationMenu $menu)
     {
-        $this->menu = $menu;
-        $this->path = $app->getConfig()->get('administrationPath') ?? $this->path;
-        $this->url = $app->getComponent()->getUrlManager()->createAbsoluteUrl('/' . $this->path);
-        $requestedUrl = ltrim($app->getComponent()->getRequest()->url, '/');
+        $this->path = $app->getAdministrationPath();
+        $this->url = $app->getApplication()->getUrlManager()->createAbsoluteUrl('/' . $this->path);
+        $requestedUrl = ltrim($app->getApplication()->getRequest()->url, '/');
 
         if (strpos($requestedUrl, $this->path) !== false) {
             $this->inAdministration = true;
         }
+
+        $this->menu = $menu;
     }
 
     /**
@@ -68,10 +68,15 @@ class Administration implements AdministrationInterface
         return $this->url;
     }
 
+    public function setMenuItems(array $items): void
+    {
+        $this->menu->addItems($items);
+    }
+
     /**
-     * @return AdministrationMenuInterface
+     * @return AdministrationMenu
      */
-    public function getMenu(): AdministrationMenuInterface
+    public function getMenu(): AdministrationMenu
     {
         return $this->menu;
     }
