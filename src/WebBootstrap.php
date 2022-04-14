@@ -4,12 +4,10 @@ declare(strict_types=1);
 
 namespace OneCMS\Admin;
 
-use OneCMS\Base\Infrstructure\Service\Bootstrap\WebBootstrapService;
+use OneCMS\Base\Infrastructure\Service\Bootstrap\WebBootstrapService;
 use OneCMS\Admin\Infrastructure\Framework\Administration\Administration;
-use OneCMS\Admin\Infrastructure\Framework\Administration\AdministrationMenu;
 use OneCMS\Admin\Infrastructure\Framework\Module;
-use OneCMS\Base\Application\Administration\AdministrationInterface;
-use OneCMS\Base\Application\Administration\AdministrationMenuInterface;
+use OneCMS\Base\Domain\Service\Administration\AdministrationServiceInterface;
 use OneCMS\Base\Infrastructure\Service\Bootstrap\RegisterDependencyBootstrapInterface;
 use OneCMS\Base\Infrastructure\Service\Bootstrap\RegisterRoutesBootstrapInterface;
 use OneCMS\Base\Infrastructure\Service\Application\WebApplicationServiceInterface;
@@ -24,14 +22,15 @@ use OneCMS\Base\Infrastructure\Service\Application\WebApplicationServiceInterfac
  */
 class WebBootstrap extends WebBootstrapService implements RegisterDependencyBootstrapInterface, RegisterRoutesBootstrapInterface
 {
+    private ?string $adminPath = null;
+
     /**
      * @inheritDoc
      */
     public function dependencies(): array
     {
         return [
-            AdministrationInterface::class => Administration::class,
-            AdministrationMenuInterface::class => AdministrationMenu::class,
+            AdministrationServiceInterface::class => Administration::class,
         ];
     }
 
@@ -40,19 +39,22 @@ class WebBootstrap extends WebBootstrapService implements RegisterDependencyBoot
      */
     public function init(WebApplicationServiceInterface $app): void
     {
+        $this->adminPath = $app->getAdministrationPath();
+
         parent::init($app);
         set_alias('@Admin', dirname(__DIR__));
 
-        $adminPath = $app->getAdministrationPath();
-
         $app->setApplicaitonProperty('modules', [
-            $adminPath => ['class' => Module::class]
+            $this->adminPath => ['class' => Module::class]
         ]);
-        $app->getAdministration()->setMenuItems([
+
+        $administration = $this->getDependency()->getContainer()->get(AdministrationServiceInterface::class);
+
+        $administration->setMenuItems([
             [
                 'label' => 'Dashboard',
                 'icon' => 'speedometer',
-                'route' => ["/$adminPath"],
+                'route' => ["/$this->adminPath"],
                 'position' => 0,
             ],
             [
@@ -71,14 +73,14 @@ class WebBootstrap extends WebBootstrapService implements RegisterDependencyBoot
     {
         return [
             [
-                'route' => $this->administrationPath,
-                'pattern' => $this->administrationPath,
+                'route' => $this->adminPath,
+                'pattern' => $this->adminPath,
                 'normalizer' => false,
                 'suffix' => false
             ],
             [
-                'route' => $this->administrationPath . '/<controller>/<action>',
-                'pattern' => $this->administrationPath . '/<controller:[\w\-]+>/<action:[\w\-]+>',
+                'route' => $this->adminPath . '/<controller>/<action>',
+                'pattern' => $this->adminPath . '/<controller:[\w\-]+>/<action:[\w\-]+>',
                 'normalizer' => false,
                 'suffix' => false
             ]
