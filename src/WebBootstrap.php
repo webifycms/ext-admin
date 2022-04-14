@@ -10,7 +10,6 @@ use OneCMS\Admin\Infrastructure\Framework\Module;
 use OneCMS\Base\Domain\Service\Administration\AdministrationServiceInterface;
 use OneCMS\Base\Infrastructure\Service\Bootstrap\RegisterDependencyBootstrapInterface;
 use OneCMS\Base\Infrastructure\Service\Bootstrap\RegisterRoutesBootstrapInterface;
-use OneCMS\Base\Infrastructure\Service\Application\WebApplicationServiceInterface;
 
 /**
  * WebBootstrap
@@ -37,18 +36,17 @@ class WebBootstrap extends WebBootstrapService implements RegisterDependencyBoot
     /**
      * @inheritdoc
      */
-    public function init(WebApplicationServiceInterface $app): void
+    public function init(): void
     {
-        $this->adminPath = $app->getAdministrationPath();
-
-        parent::init($app);
         set_alias('@Admin', dirname(__DIR__));
 
-        $app->setApplicaitonProperty('modules', [
+        $this->adminPath = $this->getApplicationService()->getAdministrationPath();
+
+        $this->getApplicationService()->setApplicaitonProperty('modules', [
             $this->adminPath => ['class' => Module::class]
         ]);
 
-        $administration = $this->getDependency()->getContainer()->get(AdministrationServiceInterface::class);
+        $administration = $this->getDependencyService()->getContainer()->get(AdministrationServiceInterface::class);
 
         $administration->setMenuItems([
             [
