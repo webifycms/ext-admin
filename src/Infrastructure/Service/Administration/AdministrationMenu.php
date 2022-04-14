@@ -9,7 +9,7 @@ use yii\web\View;
 /**
  * Class AdministrationMenu
  *
- * @package getonecms/admin
+ * @package getonecms/ext-admin
  * @version 0.0.1
  * @since   0.0.1
  * @author  Mohammed Shifreen

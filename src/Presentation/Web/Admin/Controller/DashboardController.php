@@ -8,7 +8,7 @@ use yii\web\Controller;
 /**
  * Class DashboardController
  *
- * @package getonecms/admin
+ * @package getonecms/ext-admin
  * @varsion 0.0.1
  * @since   0.0.1
  * @author  Mohammed Shifreen

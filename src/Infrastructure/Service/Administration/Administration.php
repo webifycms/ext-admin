@@ -22,7 +22,7 @@ class Administration implements AdministrationServiceInterface
     /**
      * @var string
      */
-    private string $path = 'administration';
+    private string $path;
     /**
      * @var string
      */
