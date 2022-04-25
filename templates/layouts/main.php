@@ -10,12 +10,12 @@ $asset = view()->params['asset'];
 
 <?php view()->beginPage() ?>
     <!doctype html>
-    <html lang="<?= app()->get('language') ?>">
+    <html lang="<?= app()->getApplicaitonProperty('language') ?>">
     <head>
-        <meta charset="<?= app()->get('charset') ?>">
+        <meta charset="<?= app()->getApplicaitonProperty('charset') ?>">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <title><?= app()->get('name') ?></title>
+        <title><?= app()->getApplicaitonProperty('name') ?></title>
         
         <?php view()->registerCsrfMetaTags() ?>
         <?php view()->head() ?>
@@ -38,7 +38,7 @@ $asset = view()->params['asset'];
                     <svg class="w-8 h-8" width="32" height="32" fill="currentColor">
                         <use xlink:href="<?= $asset->baseUrl . '/icons/icons.svg#app' ?>"/>
                     </svg>
-                    <span class="ml-2"><?= app()->get('name') ?></span>
+                    <span class="ml-2"><?= app()->getApplicaitonProperty('name') ?></span>
                 </a>
             </div>
 
