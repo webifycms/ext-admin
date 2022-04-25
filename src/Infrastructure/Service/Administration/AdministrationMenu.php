@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace OneCMS\Admin\Infrastructure\Framework\Administration;
+namespace OneCMS\Admin\Infrastructure\Service\Administration;
 
 use OneCMS\Base\Infrastructure\Service\Application\WebApplicationServiceInterface;
 use yii\web\View;
