@@ -5,8 +5,9 @@ declare(strict_types=1);
 namespace OneCMS\Admin;
 
 use OneCMS\Base\Infrastructure\Service\Bootstrap\WebBootstrapService;
-use OneCMS\Admin\Infrastructure\Framework\Administration\Administration;
-use OneCMS\Admin\Infrastructure\Framework\Module;
+use OneCMS\Admin\Infrastructure\Service\Administration\Administration;
+use OneCMS\Admin\Infrastructure\Service\Administration\AdministrationMenu;
+use OneCMS\Admin\Infrastructure\Module;
 use OneCMS\Base\Domain\Service\Administration\AdministrationServiceInterface;
 use OneCMS\Base\Infrastructure\Service\Bootstrap\RegisterDependencyBootstrapInterface;
 use OneCMS\Base\Infrastructure\Service\Bootstrap\RegisterRoutesBootstrapInterface;
@@ -21,15 +22,12 @@ use OneCMS\Base\Infrastructure\Service\Bootstrap\RegisterRoutesBootstrapInterfac
  */
 class WebBootstrap extends WebBootstrapService implements RegisterDependencyBootstrapInterface, RegisterRoutesBootstrapInterface
 {
-    private ?string $adminPath = null;
+    private string $adminPath = 'administration';
 
-    /**
-     * @inheritDoc
-     */
     public function dependencies(): array
     {
         return [
-            AdministrationServiceInterface::class => Administration::class,
+            AdministrationServiceInterface::class => Administration::class
         ];
     }
 
@@ -40,15 +38,19 @@ class WebBootstrap extends WebBootstrapService implements RegisterDependencyBoot
     {
         set_alias('@Admin', dirname(__DIR__));
 
-        $this->adminPath = $this->getApplicationService()->getAdministrationPath();
+        if (isset($this->getApplicationService()->getConfig()['administrationPath'])) {
+            $this->adminPath = $this->getApplicationService()->getConfig()['administrationPath'];
+        }
 
+        // $administration = new Administration($this->getApplicationService(), new AdministrationMenu($this->getApplicationService()));
+
+        // $this->getDependencyService()->getContainer()->setSingleton(AdministrationServiceInterface::class, $administration);
         $this->getApplicationService()->setApplicaitonProperty('modules', [
             $this->adminPath => ['class' => Module::class]
         ]);
 
-        $administration = $this->getDependencyService()->getContainer()->get(AdministrationServiceInterface::class);
-
-        $administration->setMenuItems([
+        // $administration->setMenuItems([
+        $this->getApplicationService()->getAdministration()->setMenuItems([
             [
                 'label' => 'Dashboard',
                 'icon' => 'speedometer',
