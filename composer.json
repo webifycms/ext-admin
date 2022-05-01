@@ -33,7 +33,7 @@
   "repositories": [
     {
       "type": "path",
-      "url": "../base"
+      "url": "../ext-base"
     },
     {
       "type": "composer",
