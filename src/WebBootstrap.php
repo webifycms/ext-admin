@@ -6,7 +6,6 @@ namespace OneCMS\Admin;
 
 use OneCMS\Base\Infrastructure\Service\Bootstrap\WebBootstrapService;
 use OneCMS\Admin\Infrastructure\Service\Administration\Administration;
-use OneCMS\Admin\Infrastructure\Service\Administration\AdministrationMenu;
 use OneCMS\Admin\Infrastructure\Module;
 use OneCMS\Base\Domain\Service\Administration\AdministrationServiceInterface;
 use OneCMS\Base\Infrastructure\Service\Bootstrap\RegisterDependencyBootstrapInterface;
