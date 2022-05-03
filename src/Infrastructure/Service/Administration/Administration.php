@@ -22,34 +22,28 @@ class Administration implements AdministrationServiceInterface
     /**
      * @var string
      */
-    private string $path;
+    private readonly string $path;
     /**
      * @var string
      */
-    private string $url;
+    private readonly string $url;
     /**
      * @var bool
      */
     private bool $inAdministration = false;
-    /**
-     * @var AdministrationMenu
-     */
-    private AdministrationMenu $menu;
 
     /**
      * @param WebApplicationServiceInterface $app
      */
-    public function __construct(WebApplicationServiceInterface $app, AdministrationMenu $menu)
+    public function __construct(WebApplicationServiceInterface $app, private readonly AdministrationMenu $menu)
     {
         $this->path = $app->getAdministrationPath();
         $this->url = $app->getApplication()->getUrlManager()->createAbsoluteUrl('/' . $this->path);
         $requestedUrl = ltrim($app->getApplication()->getRequest()->url, '/');
 
-        if (strpos($requestedUrl, $this->path) !== false) {
+        if (str_contains($requestedUrl, $this->path)) {
             $this->inAdministration = true;
         }
-
-        $this->menu = $menu;
     }
 
     /**
@@ -73,9 +67,6 @@ class Administration implements AdministrationServiceInterface
         $this->menu->addItems($items);
     }
 
-    /**
-     * @return AdministrationMenu
-     */
     public function getMenu(): AdministrationMenu
     {
         return $this->menu;

@@ -15,6 +15,6 @@ namespace OneCMS\Admin\Domain\Menu;
 class Menu
 {
     
-    private string $id;
+    private readonly string $id;
     
 }

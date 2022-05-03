@@ -15,5 +15,5 @@ namespace OneCMS\Admin\Domain\Menu;
 class MenuItem
 {
 
-    private string $lable;
+    private readonly string $lable;
 }

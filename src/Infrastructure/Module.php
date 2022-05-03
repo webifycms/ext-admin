@@ -45,9 +45,6 @@ class Module extends BaseModule
         }
     }
 
-    /**
-     * @param View $view
-     */
     protected function addThemeSupport(View $view): void
     {
         if ($view->theme instanceof ThemeInterface) {
@@ -57,9 +54,6 @@ class Module extends BaseModule
         }
     }
 
-    /**
-     * @param View $view
-     */
     protected function registerAssets(View $view): void
     {
         $view->params['asset'] = AdminAsset::register($view);

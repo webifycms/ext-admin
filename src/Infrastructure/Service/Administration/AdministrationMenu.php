@@ -19,7 +19,7 @@ class AdministrationMenu
     /**
      * @var View
      */
-    private View $view;
+    private readonly View $view;
 
     /**
      * @param WebApplicationServiceInterface $app
@@ -29,9 +29,6 @@ class AdministrationMenu
         $this->view = $app->getApplication()->getView();
     }
 
-    /**
-     * @param array $items
-     */
     public function addItems(array $items): void
     {
         foreach ($items as $item) {
@@ -48,8 +45,8 @@ class AdministrationMenu
     {
         if (!empty($this->view->params['primaryMenuItems'])) {
             usort($this->view->params['primaryMenuItems'], function ($a, $b) {
-                $a['position'] = $a['position'] ?? 10;
-                $b['position'] = $b['position'] ?? 10;
+                $a['position'] ??= 10;
+                $b['position'] ??= 10;
 
                 return $a['position'] <=> $b['position'];
             });
