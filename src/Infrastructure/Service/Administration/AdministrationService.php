@@ -8,7 +8,7 @@ use OneCMS\Base\Domain\Service\Administration\AdministrationServiceInterface;
 use OneCMS\Base\Infrastructure\Service\Application\WebApplicationServiceInterface;
 
 /**
- * Administration
+ * AdministrationService
  *
  * TODO: Add support to the sub-domain if possible. The administration currently supports only sub-path url pattern.
  *
@@ -17,7 +17,7 @@ use OneCMS\Base\Infrastructure\Service\Application\WebApplicationServiceInterfac
  * @since   0.0.1
  * @author  Mohammed Shifreen
  */
-class Administration implements AdministrationServiceInterface
+class AdministrationService implements AdministrationServiceInterface
 {
     /**
      * @var string
@@ -33,13 +33,15 @@ class Administration implements AdministrationServiceInterface
     private bool $inAdministration = false;
 
     /**
-     * @param WebApplicationServiceInterface $app
+     * @param WebApplicationServiceInterface $appService
      */
-    public function __construct(WebApplicationServiceInterface $app, private readonly AdministrationMenu $menu)
-    {
-        $this->path = $app->getAdministrationPath();
-        $this->url = $app->getApplication()->getUrlManager()->createAbsoluteUrl('/' . $this->path);
-        $requestedUrl = ltrim($app->getApplication()->getRequest()->url, '/');
+    public function __construct(
+        WebApplicationServiceInterface $appService,
+        private readonly AdministrationMenuService $menu
+    ) {
+        $this->path = $appService->getAdministrationPath();
+        $this->url = $appService->getApplication()->getUrlManager()->createAbsoluteUrl('/' . $this->path);
+        $requestedUrl = ltrim($appService->getApplication()->getRequest()->url, '/');
 
         if (str_contains($requestedUrl, $this->path)) {
             $this->inAdministration = true;
@@ -67,7 +69,7 @@ class Administration implements AdministrationServiceInterface
         $this->menu->addItems($items);
     }
 
-    public function getMenu(): AdministrationMenu
+    public function getMenu(): AdministrationMenuService
     {
         return $this->menu;
     }

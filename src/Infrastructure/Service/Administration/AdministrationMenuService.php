@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace OneCMS\Admin\Infrastructure\Service\Administration;
@@ -7,14 +8,14 @@ use OneCMS\Base\Infrastructure\Service\Application\WebApplicationServiceInterfac
 use yii\web\View;
 
 /**
- * Class AdministrationMenu
+ * Class AdministrationMenuService
  *
  * @package getonecms/ext-admin
  * @version 0.0.1
  * @since   0.0.1
  * @author  Mohammed Shifreen
  */
-class AdministrationMenu
+class AdministrationMenuService
 {
     /**
      * @var View
@@ -22,11 +23,11 @@ class AdministrationMenu
     private readonly View $view;
 
     /**
-     * @param WebApplicationServiceInterface $app
+     * @param WebApplicationServiceInterface $appService
      */
-    public function __construct(WebApplicationServiceInterface $app)
+    public function __construct(WebApplicationServiceInterface $appService)
     {
-        $this->view = $app->getApplication()->getView();
+        $this->view = $appService->getApplication()->getView();
     }
 
     public function addItems(array $items): void

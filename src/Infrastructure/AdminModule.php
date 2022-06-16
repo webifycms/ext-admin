@@ -8,22 +8,25 @@ use RuntimeException;
 use Throwable;
 use OneCMS\Admin\Presentation\Web\Admin\Asset\AdminAsset;
 use OneCMS\Base\Infrastructure\Framework\Theme\ThemeInterface;
-use yii\base\Module as BaseModule;
+use yii\base\Module;
 use yii\web\View;
 
 /**
- * Module
+ * AdminModule
  *
  * @package getonecms/ext-admin
  * @version 0.0.1
  * @since   0.0.1
  * @author  Mohammed Shifreen
  */
-class Module extends BaseModule
+class AdminModule extends Module
 {
     public $basePath = '@Admin';
+
     public $controllerNamespace = 'OneCMS\Admin\Presentation\Web\Admin\Controller';
+
     public $defaultRoute = 'dashboard';
+
     public $layout = 'main';
 
     /**
@@ -39,7 +42,7 @@ class Module extends BaseModule
             $view = $this->get('view');
 
             $this->addThemeSupport($view);
-            $this->registerAssets($view);
+            // $this->registerAssets($view);
         } catch (Throwable $throwable) {
             throw new RuntimeException($throwable->getMessage());
         }
@@ -56,6 +59,6 @@ class Module extends BaseModule
 
     protected function registerAssets(View $view): void
     {
-        $view->params['asset'] = AdminAsset::register($view);
+        $view->params['adminAsset'] = AdminAsset::register($view);
     }
 }
