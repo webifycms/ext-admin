@@ -33,7 +33,7 @@
   "repositories": [
     {
       "type": "path",
-      "url": "../ext-base"
+      "url": "../onecms-ext-base"
     },
     {
       "type": "composer",
