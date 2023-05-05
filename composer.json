@@ -1,7 +1,7 @@
 {
-  "name": "getonecms/ext-admin",
-  "description": "OneCMS admin extension",
-  "type": "onecms-extension",
+  "name": "webifycms/ext-admin",
+  "description": "WebifyCMS admin extension",
+  "type": "webifycms-extension",
   "authors": [
     {
       "name": "Mohammed Shifreen",
@@ -13,27 +13,31 @@
   "require": {
     "php": ">=8.1",
     "yiisoft/yii2": "~2.0",
-    "getonecms/ext-base": "*"
+    "webifycms/ext-base": "*"
   },
   "require-dev": {
-    "phpunit/phpunit": "^9.5",
-    "rector/rector": "^0.12.19"
+    "phpunit/phpunit": "^10",
+    "webifycms/dev-tools": "*"
   },
   "autoload": {
     "psr-4": {
-      "OneCMS\\Admin\\": "src"
+      "Webify\\Admin\\": "src"
     }
   },
   "autoload-dev": {
     "psr-4": {
-      "OneCMS\\Admin\\Test\\": "test"
+      "Webify\\Admin\\Test\\": "test"
     }
   },
   "optimize-autoloader": true,
   "repositories": [
     {
-      "type": "path",
-      "url": "../onecms-ext-base"
+      "type": "vcs",
+      "url": "https://github.com/webifycms/ext-base"
+    },
+    {
+      "type": "vcs",
+      "url": "https://github.com/webifycms/dev-tools"
     },
     {
       "type": "composer",

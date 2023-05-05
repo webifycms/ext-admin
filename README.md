@@ -1,1 +1,1 @@
-# OneCMS Administration Module
+# WebifyCMS Administration Module

@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace OneCMS\Admin\Presentation\Web\Admin\Asset;
+namespace Webify\Admin\Presentation\Web\Admin\Asset;
 
 use yii\web\AssetBundle;
 

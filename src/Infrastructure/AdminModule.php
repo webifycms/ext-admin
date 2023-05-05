@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace OneCMS\Admin\Infrastructure;
+namespace Webify\Admin\Infrastructure;
 
 use RuntimeException;
 use Throwable;
-use OneCMS\Admin\Presentation\Web\Admin\Asset\AdminAsset;
-use OneCMS\Base\Infrastructure\Framework\Theme\ThemeInterface;
+use Webify\Admin\Presentation\Web\Admin\Asset\AdminAsset;
+use Webify\Base\Infrastructure\Framework\Theme\ThemeInterface;
 use yii\base\Module;
 use yii\web\View;
 
@@ -23,7 +23,7 @@ class AdminModule extends Module
 {
     public $basePath = '@Admin';
 
-    public $controllerNamespace = 'OneCMS\Admin\Presentation\Web\Admin\Controller';
+    public $controllerNamespace = 'Webify\Admin\Presentation\Web\Admin\Controller';
 
     public $defaultRoute = 'dashboard';
 

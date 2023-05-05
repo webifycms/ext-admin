@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace OneCMS\Admin\Presentation\Web\Admin\Controller;
+namespace Webify\Admin\Presentation\Web\Admin\Controller;
 
 use yii\web\Controller;
 
