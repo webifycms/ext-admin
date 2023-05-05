@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace OneCMS\Admin\Infrastructure\Service\Administration;
+namespace Webify\Admin\Infrastructure\Service\Administration;
 
-use OneCMS\Base\Domain\Service\Administration\AdministrationServiceInterface;
-use OneCMS\Base\Infrastructure\Service\Application\WebApplicationServiceInterface;
+use Webify\Base\Domain\Service\Administration\AdministrationServiceInterface;
+use Webify\Base\Infrastructure\Service\Application\WebApplicationServiceInterface;
 
 /**
  * AdministrationService

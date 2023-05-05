@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace OneCMS\Admin\Domain\Menu;
+namespace Webify\Admin\Domain\Menu;
 
 
 /**

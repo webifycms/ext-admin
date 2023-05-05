@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace OneCMS\Admin\Infrastructure\Service\Administration;
+namespace Webify\Admin\Infrastructure\Service\Administration;
 
-use OneCMS\Base\Infrastructure\Service\Application\WebApplicationServiceInterface;
+use Webify\Base\Infrastructure\Service\Application\WebApplicationServiceInterface;
 use yii\web\View;
 
 /**
