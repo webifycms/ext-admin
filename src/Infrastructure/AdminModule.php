@@ -1,64 +1,71 @@
 <?php
-
+/**
+ * The file is part of the "webifycms/ext-admin", WebifyCMS extension package.
+ *
+ * @see https://webifycms.com/extension/admin
+ *
+ * @copyright Copyright (c) 2023 WebifyCMS
+ * @license https://webifycms.com/extension/admin/license
+ * @author Mohammed Shifreen <mshifreen@gmail.com>
+ */
 declare(strict_types=1);
 
 namespace Webify\Admin\Infrastructure;
 
-use RuntimeException;
-use Throwable;
 use Webify\Admin\Presentation\Web\Admin\Asset\AdminAsset;
-use Webify\Base\Infrastructure\Framework\Theme\ThemeInterface;
+use Webify\Base\Domain\Service\Theme\ThemeInterface;
 use yii\base\Module;
 use yii\web\View;
 
 /**
- * AdminModule
- *
- * @package getonecms/ext-admin
- * @version 0.0.1
- * @since   0.0.1
- * @author  Mohammed Shifreen
+ * Administration module.
  */
-class AdminModule extends Module
+final class AdminModule extends Module
 {
-    public $basePath = '@Admin';
+	/**
+	 * @todo Should check weather this property is necessary.
+	 */
+	public string $basePath = '@Admin';
 
-    public $controllerNamespace = 'Webify\Admin\Presentation\Web\Admin\Controller';
+	public $controllerNamespace = 'Webify\Admin\Presentation\Web\Admin\Controller';
 
-    public $defaultRoute = 'dashboard';
+	public $defaultRoute = 'dashboard';
 
-    public $layout = 'main';
+	public $layout = 'main';
 
-    /**
-     * @inheritDoc
-     */
-    public function init()
-    {
-        parent::init();
-        $this->setViewPath('@Admin/templates');
+	/**
+	 * {@inheritDoc}
+	 */
+	public function init(): void
+	{
+		parent::init();
+		$this->setViewPath('@Admin/templates');
 
-        // adding theme support for the templates and register assets
-        try {
-            $view = $this->get('view');
+		// adding theme support for the templates and register assets
+		try {
+			$view = $this->get('view');
 
-            $this->addThemeSupport($view);
-            // $this->registerAssets($view);
-        } catch (Throwable $throwable) {
-            throw new RuntimeException($throwable->getMessage());
-        }
-    }
+			$this->addThemeSupport($view);
+			// $this->registerAssets($view);
+		} catch (\Throwable $throwable) {
+			throw new \RuntimeException($throwable->getMessage());
+		}
+	}
 
-    protected function addThemeSupport(View $view): void
-    {
-        if ($view->theme instanceof ThemeInterface) {
-            $view->theme->pathMap = array_merge($view->theme->pathMap, [
-                '@Admin/templates' => '@App/themes/' . $view->theme->getId() . '/templates/' . $this->id
-            ]);
-        }
-    }
+	/**
+	 * Add theme support for this module.
+	 */
+	protected function addThemeSupport(View $view): void
+	{
+		if ($view->theme instanceof ThemeInterface) {
+			$view->theme->pathMap = array_merge($view->theme->pathMap, [
+				'@Admin/templates' => '@App/themes/' . $view->theme->getId() . '/templates/' . $this->id,
+			]);
+		}
+	}
 
-    protected function registerAssets(View $view): void
-    {
-        $view->params['adminAsset'] = AdminAsset::register($view);
-    }
+	protected function registerAssets(View $view): void
+	{
+		$view->params['adminAsset'] = AdminAsset::register($view);
+	}
 }

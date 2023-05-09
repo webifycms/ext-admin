@@ -1,1 +1,1 @@
-# WebifyCMS Administration Module
+# WebifyCMS Administration Extension
