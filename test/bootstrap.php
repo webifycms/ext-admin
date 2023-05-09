@@ -10,9 +10,6 @@
  */
 declare(strict_types=1);
 
-use Webify\Tools\Rector;
+require __DIR__ . '/../vendor/autoload.php';
 
-return (new Rector())->initialize([
-	__DIR__ . '/src',
-	__DIR__ . '/test',
-]);
+require __DIR__ . '/../vendor/yiisoft/yii2/Yii.php';

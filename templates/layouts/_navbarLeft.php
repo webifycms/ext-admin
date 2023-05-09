@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /**
  * @var $asset
  */
@@ -14,7 +15,7 @@
     >
         <span class="sr-only">Open main menu</span>
         <svg class="h-6 w-6" fill="currentColor">
-            <use xlink:href="<?= $asset->baseUrl . '/icons/icons.svg#card-list' ?>"/>
+            <use xlink:href="<?php echo $asset->baseUrl . '/icons/icons.svg#card-list'; ?>"/>
         </svg>
     </button>
 </div>

@@ -48,5 +48,19 @@
     "allow-plugins": {
       "yiisoft/yii2-composer": true
     }
+  },
+  "scripts": {
+    "code-sniff": [
+      "php-cs-fixer fix --verbose --dry-run --diff --show-progress=dots --using-cache=no"
+    ],
+    "code-format": [
+      "php-cs-fixer fix --verbose --show-progress=dots"
+    ],
+    "code-analyze": [
+      "phpstan"
+    ],
+    "test": [
+      "phpunit --testdox test"
+    ]
   }
 }

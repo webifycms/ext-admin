@@ -1,84 +1,79 @@
 <?php
-
+/**
+ * The file is part of the "webifycms/ext-admin", WebifyCMS extension package.
+ *
+ * @see https://webifycms.com/extension/admin
+ *
+ * @copyright Copyright (c) 2023 WebifyCMS
+ * @license https://webifycms.com/extension/admin/license
+ * @author Mohammed Shifreen <mshifreen@gmail.com>
+ */
 declare(strict_types=1);
 
 namespace Webify\Admin\Infrastructure\Service\Administration;
 
 use Webify\Base\Domain\Service\Administration\AdministrationServiceInterface;
+use Webify\Base\Domain\Service\Application\ApplicationServiceInterface;
 use Webify\Base\Infrastructure\Service\Application\WebApplicationServiceInterface;
 
 /**
- * AdministrationService
+ * Administration service class.
  *
  * TODO: Add support to the sub-domain if possible. The administration currently supports only sub-path url pattern.
- *
- * @package getonecms/ext-admin
- * @version 0.0.1
- * @since   0.0.1
- * @author  Mohammed Shifreen
  */
-class AdministrationService implements AdministrationServiceInterface
+final class AdministrationService implements AdministrationServiceInterface
 {
-    /**
-     * @var string
-     */
-    private readonly string $path;
-    /**
-     * @var string
-     */
-    private readonly string $url;
-    /**
-     * @var bool
-     */
-    private bool $inAdministration = false;
+	private readonly string $path;
 
-    /**
-     * @param WebApplicationServiceInterface $appService
-     */
-    public function __construct(
-        WebApplicationServiceInterface $appService,
-        private readonly AdministrationMenuService $menu
-    ) {
-        $this->path = $appService->getAdministrationPath();
-        $this->url = $appService->getApplication()->getUrlManager()->createAbsoluteUrl('/' . $this->path);
-        $requestedUrl = ltrim($appService->getApplication()->getRequest()->url, '/');
+	private readonly string $url;
 
-        if (str_contains($requestedUrl, $this->path)) {
-            $this->inAdministration = true;
-        }
-    }
+	private bool $inAdministration = false;
 
-    /**
-     * @inheritDoc
-     */
-    public function getPath(): string
-    {
-        return $this->path;
-    }
+	/**
+	 * The object constructor.
+	 */
+	public function __construct(
+		ApplicationServiceInterface|WebApplicationServiceInterface $appService,
+		public readonly AdministrationMenuService $menuService
+	) {
+		$this->path   = $appService->getAdministrationPath();
+		$this->url    = $appService->getApplication()->getUrlManager()->createAbsoluteUrl('/' . $this->path);
+		$requestedUrl = ltrim($appService->getApplication()->getRequest()->url, '/');
 
-    /**
-     * @inheritDoc
-     */
-    public function getUrl(): string
-    {
-        return $this->url;
-    }
+		if (str_contains($requestedUrl, $this->path)) {
+			$this->inAdministration = true;
+		}
+	}
 
-    public function setMenuItems(array $items): void
-    {
-        $this->menu->addItems($items);
-    }
+	/**
+	 * {@inheritDoc}
+	 */
+	public function getPath(): string
+	{
+		return $this->path;
+	}
 
-    public function getMenu(): AdministrationMenuService
-    {
-        return $this->menu;
-    }
+	/**
+	 * {@inheritDoc}
+	 */
+	public function getUrl(): string
+	{
+		return $this->url;
+	}
 
-    /**
-     * @inheritDoc
-     */
-    public function inAdministration(): bool
-    {
-        return $this->inAdministration;
-    }
+	/**
+	 * {@inheritDoc}
+	 */
+	public function setMenuItems(array $items): void
+	{
+		$this->menuService->addItems($items);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public function inAdministration(): bool
+	{
+		return $this->inAdministration;
+	}
 }

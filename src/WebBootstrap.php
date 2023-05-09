@@ -4,7 +4,7 @@
  *
  * @see https://webifycms.com/extension/admin
  *
- * @license Copyright (c) 2022 WebifyCMS
+ * @copyright Copyright (c) 2023 WebifyCMS
  * @license https://webifycms.com/extension/admin/license
  * @author Mohammed Shifreen <mshifreen@gmail.com>
  */
@@ -18,10 +18,11 @@ use Webify\Base\Domain\Service\Administration\AdministrationServiceInterface;
 use Webify\Base\Infrastructure\Service\Bootstrap\RegisterDependencyBootstrapInterface;
 use Webify\Base\Infrastructure\Service\Bootstrap\RegisterRoutesBootstrapInterface;
 use Webify\Base\Infrastructure\Service\Bootstrap\WebBootstrapService;
+
 use function Webify\Base\Infrastructure\set_alias;
 
 /**
- * WebBootstrap.
+ * Web application bootstrap class of admin extension.
  */
 final class WebBootstrap extends WebBootstrapService implements RegisterDependencyBootstrapInterface, RegisterRoutesBootstrapInterface
 {
