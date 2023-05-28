@@ -12,6 +12,7 @@ declare(strict_types=1);
 
 namespace Webify\Admin\Infrastructure;
 
+use Webify\Admin\Infrastructure\Service\Administration\AdministrationMenuService;
 use Webify\Admin\Presentation\Web\Admin\Asset\AdminAsset;
 use Webify\Base\Domain\Service\Theme\ThemeInterface;
 use yii\base\Module;
@@ -33,6 +34,8 @@ final class AdminModule extends Module
 
 	public $layout = 'main';
 
+	public AdministrationMenuService $menuService;
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -43,8 +46,10 @@ final class AdminModule extends Module
 
 		// adding theme support for the templates and register assets
 		try {
-			$view = $this->get('view');
+			$view              = $this->get('view');
+			$this->menuService = new AdministrationMenuService($view);
 
+			$this->registerMenuItems();
 			$this->addThemeSupport($view);
 			// $this->registerAssets($view);
 		} catch (\Throwable $throwable) {
@@ -53,9 +58,30 @@ final class AdminModule extends Module
 	}
 
 	/**
+	 * Registering admin menu items.
+	 */
+	private function registerMenuItems(): void
+	{
+		$this->menuService->addItems([
+			[
+				'label'    => 'Dashboard',
+				'icon'     => 'speedometer',
+				'route'    => ["/{$this->id}"],
+				'position' => 0,
+			],
+			[
+				'label'    => 'Settings',
+				'icon'     => 'sliders',
+				'route'    => '#',
+				'position' => 10,
+			],
+		]);
+	}
+
+	/**
 	 * Add theme support for this module.
 	 */
-	protected function addThemeSupport(View $view): void
+	private function addThemeSupport(View $view): void
 	{
 		if ($view->theme instanceof ThemeInterface) {
 			$view->theme->pathMap = array_merge($view->theme->pathMap, [
@@ -64,7 +90,7 @@ final class AdminModule extends Module
 		}
 	}
 
-	protected function registerAssets(View $view): void
+	private function registerAssets(View $view): void
 	{
 		$view->params['adminAsset'] = AdminAsset::register($view);
 	}
