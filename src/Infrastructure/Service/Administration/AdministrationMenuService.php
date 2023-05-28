@@ -12,8 +12,6 @@ declare(strict_types=1);
 
 namespace Webify\Admin\Infrastructure\Service\Administration;
 
-use Webify\Base\Domain\Service\Application\ApplicationServiceInterface;
-use Webify\Base\Infrastructure\Service\Application\WebApplicationServiceInterface;
 use yii\base\View as BaseView;
 use yii\web\View;
 
@@ -22,15 +20,12 @@ use yii\web\View;
  */
 final class AdministrationMenuService
 {
-	private readonly View|BaseView $view;
-
 	/**
 	 * The object constructor.
 	 */
 	public function __construct(
-		ApplicationServiceInterface|WebApplicationServiceInterface $appService
+		private readonly View|BaseView $view
 	) {
-		$this->view = $appService->getApplication()->getView();
 	}
 
 	/**

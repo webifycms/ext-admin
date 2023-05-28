@@ -12,9 +12,9 @@ declare(strict_types=1);
 
 namespace Webify\Admin;
 
+use Webify\Admin\Domain\Service\Administration\AdministrationServiceInterface;
 use Webify\Admin\Infrastructure\AdminModule;
 use Webify\Admin\Infrastructure\Service\Administration\AdministrationService;
-use Webify\Base\Domain\Service\Administration\AdministrationServiceInterface;
 use Webify\Base\Infrastructure\Service\Bootstrap\RegisterDependencyBootstrapInterface;
 use Webify\Base\Infrastructure\Service\Bootstrap\RegisterRoutesBootstrapInterface;
 use Webify\Base\Infrastructure\Service\Bootstrap\WebBootstrapService;
@@ -46,11 +46,10 @@ final class WebBootstrap extends WebBootstrapService implements RegisterDependen
 		set_alias('@Admin', \dirname(__DIR__));
 
 		if (isset($this->getApplicationService()->getConfig()['administrationPath'])) {
-			$this->adminPath = $this->getApplicationService()->getConfig()['administrationPath'];
+			$this->adminPath = $this->getApplicationService()->getAdministrationPath();
 		}
 
 		$this->getApplication()->setModule($this->adminPath, ['class' => AdminModule::class]);
-		$this->registerAdminMenuItems();
 		$this->registerTranslations();
 	}
 
@@ -73,27 +72,6 @@ final class WebBootstrap extends WebBootstrapService implements RegisterDependen
 				'suffix'     => false,
 			],
 		];
-	}
-
-	/**
-	 * Registering admin menu items.
-	 */
-	private function registerAdminMenuItems(): void
-	{
-		$this->getApplicationService()->getAdministration()->setMenuItems([
-			[
-				'label'    => 'Dashboard',
-				'icon'     => 'speedometer',
-				'route'    => ["/{$this->adminPath}"],
-				'position' => 0,
-			],
-			[
-				'label'    => 'Settings',
-				'icon'     => 'sliders',
-				'route'    => '#',
-				'position' => 10,
-			],
-		]);
 	}
 
 	/**
