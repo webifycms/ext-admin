@@ -28,9 +28,6 @@ final class WebBootstrap extends WebBootstrapService implements RegisterDependen
 {
 	private string $adminPath = 'administration';
 
-	/**
-	 * {@inheritDoc}
-	 */
 	public function dependencies(): array
 	{
 		return [
@@ -38,9 +35,6 @@ final class WebBootstrap extends WebBootstrapService implements RegisterDependen
 		];
 	}
 
-	/**
-	 * {@inheritdoc}
-	 */
 	public function init(): void
 	{
 		set_alias('@Admin', \dirname(__DIR__));
@@ -53,9 +47,6 @@ final class WebBootstrap extends WebBootstrapService implements RegisterDependen
 		$this->registerTranslations();
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
 	public function routes(): array
 	{
 		return [

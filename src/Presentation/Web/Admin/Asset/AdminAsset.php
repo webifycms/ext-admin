@@ -19,21 +19,12 @@ use yii\web\AssetBundle;
  */
 final class AdminAsset extends AssetBundle
 {
-	/**
-	 * {@inheritdoc}
-	 */
 	public $sourcePath = '@Admin/dist';
 
-	/**
-	 * {@inheritdoc}
-	 */
 	public $css = [
 		'css/app.css',
 	];
 
-	/**
-	 * {@inheritdoc}
-	 */
 	public $js = [
 		'js/app.js',
 	];
