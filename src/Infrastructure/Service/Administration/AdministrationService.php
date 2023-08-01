@@ -44,25 +44,16 @@ final class AdministrationService implements AdministrationServiceInterface
 		}
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
 	public function getPath(): string
 	{
 		return $this->path;
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
 	public function getUrl(): string
 	{
 		return $this->url;
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
 	public function inAdministration(): bool
 	{
 		return $this->inAdministration;

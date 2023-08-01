@@ -36,9 +36,6 @@ final class AdminModule extends Module
 
 	public AdministrationMenuService $menuService;
 
-	/**
-	 * {@inheritDoc}
-	 */
 	public function init(): void
 	{
 		parent::init();

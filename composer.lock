@@ -1329,12 +1329,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/webifycms/ext-base.git",
-                "reference": "24b1a2e287621b672b25beedb005a490e77b59fd"
+                "reference": "d7ab4204d3a5a591cb48e23478ea18bbf4a3cb44"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/webifycms/ext-base/zipball/24b1a2e287621b672b25beedb005a490e77b59fd",
-                "reference": "24b1a2e287621b672b25beedb005a490e77b59fd",
+                "url": "https://api.github.com/repos/webifycms/ext-base/zipball/d7ab4204d3a5a591cb48e23478ea18bbf4a3cb44",
+                "reference": "d7ab4204d3a5a591cb48e23478ea18bbf4a3cb44",
                 "shasum": ""
             },
             "require": {
@@ -1352,7 +1352,10 @@
             "autoload": {
                 "psr-4": {
                     "Webify\\Base\\": "src/"
-                }
+                },
+                "files": [
+                    "src/Infrastructure/Helpers.php"
+                ]
             },
             "autoload-dev": {
                 "psr-4": {
@@ -1384,7 +1387,7 @@
                 "source": "https://github.com/webifycms/ext-base/tree/main",
                 "issues": "https://github.com/webifycms/ext-base/issues"
             },
-            "time": "2023-08-01T12:37:58+00:00"
+            "time": "2023-08-01T12:55:51+00:00"
         },
         {
             "name": "yiisoft/yii2",
