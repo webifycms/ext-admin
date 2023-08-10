@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "6f1df48225600d04c1e2c32d413956ac",
+    "content-hash": "1e8d696a3f12dab08d5f6e95d6265652",
     "packages": [
         {
             "name": "bower-asset/inputmask",
@@ -1326,16 +1326,10 @@
         {
             "name": "webifycms/ext-base",
             "version": "dev-main",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/webifycms/ext-base.git",
-                "reference": "d7ab4204d3a5a591cb48e23478ea18bbf4a3cb44"
-            },
             "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/webifycms/ext-base/zipball/d7ab4204d3a5a591cb48e23478ea18bbf4a3cb44",
-                "reference": "d7ab4204d3a5a591cb48e23478ea18bbf4a3cb44",
-                "shasum": ""
+                "type": "path",
+                "url": "../ext-base",
+                "reference": "d7ab4204d3a5a591cb48e23478ea18bbf4a3cb44"
             },
             "require": {
                 "php": ">=8.1",
@@ -1347,7 +1341,6 @@
                 "phpunit/phpunit": "^10",
                 "webifycms/dev-tools": "*"
             },
-            "default-branch": true,
             "type": "webifycms-extension",
             "autoload": {
                 "psr-4": {
@@ -1383,11 +1376,10 @@
                 }
             ],
             "description": "WebifyCMS base extension.",
-            "support": {
-                "source": "https://github.com/webifycms/ext-base/tree/main",
-                "issues": "https://github.com/webifycms/ext-base/issues"
-            },
-            "time": "2023-08-01T12:55:51+00:00"
+            "transport-options": {
+                "symlink": true,
+                "relative": true
+            }
         },
         {
             "name": "yiisoft/yii2",

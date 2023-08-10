@@ -26,7 +26,13 @@ use function Webify\Base\Infrastructure\set_alias;
  */
 final class WebBootstrap extends WebBootstrapService implements RegisterDependencyBootstrapInterface, RegisterRoutesBootstrapInterface
 {
-	private string $adminPath = 'administration';
+	public function init(): void
+	{
+		set_alias('@Admin', \dirname(__DIR__));
+
+		$this->getApplication()->setModule($this->getApplicationService()->getAdministrationPath(), ['class' => AdminModule::class]);
+		$this->registerTranslations();
+	}
 
 	public function dependencies(): array
 	{
@@ -35,30 +41,20 @@ final class WebBootstrap extends WebBootstrapService implements RegisterDependen
 		];
 	}
 
-	public function init(): void
-	{
-		set_alias('@Admin', \dirname(__DIR__));
-
-		if (isset($this->getApplicationService()->getConfig()['administrationPath'])) {
-			$this->adminPath = $this->getApplicationService()->getAdministrationPath();
-		}
-
-		$this->getApplication()->setModule($this->adminPath, ['class' => AdminModule::class]);
-		$this->registerTranslations();
-	}
-
 	public function routes(): array
 	{
+		$adminPath = $this->getApplicationService()->getAdministrationPath();
+
 		return [
 			[
-				'route'      => $this->adminPath,
-				'pattern'    => $this->adminPath,
+				'route'      => $adminPath,
+				'pattern'    => $adminPath,
 				'normalizer' => false,
 				'suffix'     => false,
 			],
 			[
-				'route'      => $this->adminPath . '/<controller>/<action>',
-				'pattern'    => $this->adminPath . '/<controller:[\w\-]+>/<action:[\w\-]+>',
+				'route'      => $adminPath . '/<controller>/<action>',
+				'pattern'    => $adminPath . '/<controller:[\w\-]+>/<action:[\w\-]+>',
 				'normalizer' => false,
 				'suffix'     => false,
 			],
