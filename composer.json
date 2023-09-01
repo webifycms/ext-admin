@@ -1,6 +1,6 @@
 {
   "name": "webifycms/ext-admin",
-  "description": "WebifyCMS admin extension",
+  "description": "The WebifyCMS admin extension provides basic administration features of the application and includes an API for other extensions to use.",
   "type": "webifycms-extension",
   "authors": [
     {
