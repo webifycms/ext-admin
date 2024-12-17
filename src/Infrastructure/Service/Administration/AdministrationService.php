@@ -17,9 +17,9 @@ use Webify\Base\Domain\Service\Application\ApplicationServiceInterface;
 use Webify\Base\Infrastructure\Service\Application\WebApplicationServiceInterface;
 
 /**
- * Administration service class.
- *
- * TODO: Add support to the sub-domain if possible. The administration currently supports only sub-path url pattern.
+ * This class provides functionality to manage the administration section of an application.
+ * It determines the administration path and URL, and checks if the application is currently
+ * in the administration context.
  */
 final class AdministrationService implements AdministrationServiceInterface
 {
@@ -30,7 +30,7 @@ final class AdministrationService implements AdministrationServiceInterface
 	private bool $inAdministration = false;
 
 	/**
-	 * The object constructor.
+	 * The class constructor.
 	 */
 	public function __construct(
 		ApplicationServiceInterface|WebApplicationServiceInterface $appService
@@ -44,16 +44,25 @@ final class AdministrationService implements AdministrationServiceInterface
 		}
 	}
 
+    /**
+     * @inheritDoc
+     */
 	public function getPath(): string
 	{
 		return $this->path;
 	}
 
+    /**
+     * @inheritDoc
+     */
 	public function getUrl(): string
 	{
 		return $this->url;
 	}
 
+    /**
+     * @inheritDoc
+     */
 	public function inAdministration(): bool
 	{
 		return $this->inAdministration;

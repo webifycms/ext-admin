@@ -10,67 +10,64 @@
  */
 declare(strict_types=1);
 
-namespace Webify\Admin\Infrastructure;
+namespace Webify\Admin\Infrastructure\Service\Bootstrap;
 
-use Webify\Admin\Domain\Service\Administration\AdministrationServiceInterface;
-use Webify\Admin\Infrastructure\Service\Administration\AdministrationService;
+use Webify\Admin\Infrastructure\AdminModule;
 use Webify\Base\Domain\Service\Application\ApplicationServiceInterface as DomainApplicationServiceInterface;
 use Webify\Base\Domain\Service\Dependency\DependencyServiceInterface;
 use Webify\Base\Infrastructure\Service\Application\ApplicationServiceInterface;
 use Webify\Base\Infrastructure\Service\Application\WebApplicationServiceInterface;
+use Webify\Base\Infrastructure\Service\Bootstrap\BaseWebBootstrapService;
 use Webify\Base\Infrastructure\Service\Bootstrap\RegisterDependencyBootstrapInterface;
 use Webify\Base\Infrastructure\Service\Bootstrap\RegisterRoutesBootstrapInterface;
-use Webify\Base\Infrastructure\Service\Bootstrap\WebBootstrapService;
-
+use function Webify\Base\Infrastructure\get_alias;
 use function Webify\Base\Infrastructure\set_alias;
 
 /**
  * Web application bootstrap class of admin extension.
  */
-final class WebBootstrap extends WebBootstrapService implements RegisterDependencyBootstrapInterface, RegisterRoutesBootstrapInterface
+final class WebBootstrapService extends BaseWebBootstrapService
+    implements RegisterDependencyBootstrapInterface, RegisterRoutesBootstrapInterface
 {
 	private string $adminPath;
 
+    /**
+     * The class constructor
+     */
 	public function __construct(
 		DependencyServiceInterface $dependencyService,
 		DomainApplicationServiceInterface|ApplicationServiceInterface|WebApplicationServiceInterface $appService,
 	) {
+        set_alias('@Admin', \dirname(__DIR__));
+
 		$this->adminPath = $appService->getAdministrationPath();
 
 		parent::__construct($dependencyService, $appService);
 	}
 
+    /**
+     * @inheritDoc
+     */
 	public function dependencies(): array
 	{
-		return [
-			AdministrationServiceInterface::class => AdministrationService::class,
-		];
+		return include_once get_alias('@Admin/config/dependencies.php');
 	}
 
+    /**
+     * @inheritDoc
+     */
 	public function init(): void
 	{
-		set_alias('@Admin', \dirname(__DIR__));
-
 		$this->getApplication()->setModule($this->adminPath, ['class' => AdminModule::class]);
 		$this->registerTranslations();
 	}
 
+    /**
+     * @inheritDoc
+     */
 	public function routes(): array
 	{
-		return [
-			[
-				'route'      => $this->adminPath,
-				'pattern'    => $this->adminPath,
-				'normalizer' => false,
-				'suffix'     => false,
-			],
-			[
-				'route'      => $this->adminPath . '/<controller>/<action>',
-				'pattern'    => $this->adminPath . '/<controller:[\w\-]+>/<action:[\w\-]+>',
-				'normalizer' => false,
-				'suffix'     => false,
-			],
-		];
+        return include_once get_alias('@Admin/config/routes.php');
 	}
 
 	/**

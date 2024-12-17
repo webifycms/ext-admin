@@ -10,14 +10,14 @@
  */
 declare(strict_types=1);
 
-namespace Webify\Admin\Presentation\Web\Admin\Controller;
+namespace Webify\Admin\Infrastructure\Presentation\Web\Controller\Admin;
 
-use Webify\Base\Presentation\Web\Controller\WebController;
+use Webify\Base\Infrastructure\Presentation\Web\Controller\BaseWebController;
 
 /**
  * DashboardController.
  */
-final class DashboardController extends WebController
+final class DashboardController extends BaseWebController
 {
 	public function actionIndex(): string
 	{

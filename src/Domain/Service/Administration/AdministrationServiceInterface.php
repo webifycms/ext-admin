@@ -13,7 +13,7 @@ declare(strict_types=1);
 namespace Webify\Admin\Domain\Service\Administration;
 
 /**
- * The interface that defined administration service functionalities.
+ * Interface for defining administration services.
  */
 interface AdministrationServiceInterface
 {
