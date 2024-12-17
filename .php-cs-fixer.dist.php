@@ -14,7 +14,7 @@ declare(strict_types=1);
 require __DIR__ . '/vendor/autoload.php';
 
 use PhpCsFixer\Finder;
-use Webify\Tools\Fixer;
+use Webify\Tools\Fixer\Fixer;
 
 $finder = Finder::create()
 	->in([
