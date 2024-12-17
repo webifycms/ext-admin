@@ -12,8 +12,9 @@ declare(strict_types=1);
 
 namespace Webify\Admin\Infrastructure;
 
+use Webify\Admin\Infrastructure\Asset\AdminAsset;
 use Webify\Admin\Infrastructure\Service\Administration\AdministrationMenuService;
-use Webify\Admin\Presentation\Web\Admin\Asset\AdminAsset;
+use Webify\Base\Domain\Exception\TranslatableRuntimeException;
 use Webify\Base\Domain\Service\Theme\ThemeInterface;
 use yii\base\Module;
 use yii\web\View;
@@ -36,6 +37,9 @@ final class AdminModule extends Module
 
 	public AdministrationMenuService $menuService;
 
+    /**
+     * @inheritDoc
+     */
 	public function init(): void
 	{
 		parent::init();
@@ -49,8 +53,10 @@ final class AdminModule extends Module
 			$this->registerMenuItems();
 			$this->addThemeSupport($view);
 			// $this->registerAssets($view);
-		} catch (\Throwable $throwable) {
-			throw new \RuntimeException($throwable->getMessage());
+		} catch (\Throwable $exception) {
+			throw new TranslatableRuntimeException(
+                'admin.view_component_error', [], $exception->getCode(), $exception
+            );
 		}
 	}
 

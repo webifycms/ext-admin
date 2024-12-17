@@ -10,11 +10,22 @@
  */
 declare(strict_types=1);
 
-namespace Webify\Admin\Domain\Menu;
+namespace Webify\Admin\Infrastructure\Asset;
+
+use yii\web\AssetBundle;
 
 /**
- * Class MenuItem.
+ * Class AdminAsset.
  */
-final class MenuItem
+final class AdminAsset extends AssetBundle
 {
+	public $sourcePath = '@Admin/dist';
+
+	public $css = [
+		'css/app.css',
+	];
+
+	public $js = [
+		'js/app.js',
+	];
 }
