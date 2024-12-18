@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "6f1df48225600d04c1e2c32d413956ac",
+    "content-hash": "3d3e2accee61b3ca9ba70539b29662e6",
     "packages": [
         {
             "name": "bower-asset/inputmask",
@@ -764,8 +764,8 @@
             "type": "library",
             "extra": {
                 "thanks": {
-                    "name": "symfony/polyfill",
-                    "url": "https://github.com/symfony/polyfill"
+                    "url": "https://github.com/symfony/polyfill",
+                    "name": "symfony/polyfill"
                 }
             },
             "autoload": {
@@ -1229,16 +1229,10 @@
         {
             "name": "webifycms/ext-base",
             "version": "dev-main",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/webifycms/ext-base.git",
-                "reference": "4b4f1580774642e5f8d19c568a1a87a84376a8d2"
-            },
             "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/webifycms/ext-base/zipball/4b4f1580774642e5f8d19c568a1a87a84376a8d2",
-                "reference": "4b4f1580774642e5f8d19c568a1a87a84376a8d2",
-                "shasum": ""
+                "type": "path",
+                "url": "../ext-base",
+                "reference": "4b4f1580774642e5f8d19c568a1a87a84376a8d2"
             },
             "require": {
                 "php": ">=8.1",
@@ -1250,7 +1244,6 @@
                 "phpunit/phpunit": "^10",
                 "webifycms/dev-tools": "^0.7"
             },
-            "default-branch": true,
             "type": "webifycms-extension",
             "autoload": {
                 "psr-4": {
@@ -1286,11 +1279,9 @@
                 }
             ],
             "description": "The WebifyCMS base extension serves as the foundation for the entire application, holding abstractions and reusable components.",
-            "support": {
-                "source": "https://github.com/webifycms/ext-base/tree/main",
-                "issues": "https://github.com/webifycms/ext-base/issues"
-            },
-            "time": "2024-12-17T17:52:59+00:00"
+            "transport-options": {
+                "relative": true
+            }
         },
         {
             "name": "yiisoft/yii2",
@@ -5526,9 +5517,7 @@
     ],
     "aliases": [],
     "minimum-stability": "dev",
-    "stability-flags": {
-        "webifycms/ext-base": 20
-    },
+    "stability-flags": [],
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {
