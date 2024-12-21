@@ -38,7 +38,7 @@ final class WebBootstrapService extends BaseWebBootstrapService
 		DependencyServiceInterface $dependencyService,
 		DomainApplicationServiceInterface|ApplicationServiceInterface|WebApplicationServiceInterface $appService,
 	) {
-        set_alias('@Admin', \dirname(__DIR__));
+        set_alias('@Admin', '@Extensions/ext-admin');
 
 		$this->adminPath = $appService->getAdministrationPath();
 
