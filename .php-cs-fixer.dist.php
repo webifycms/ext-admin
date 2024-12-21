@@ -1,4 +1,5 @@
 <?php
+
 /**
  * The file is part of the "webifycms/ext-admin", WebifyCMS extension package.
  *
@@ -17,11 +18,13 @@ use PhpCsFixer\Finder;
 use Webify\Tools\Fixer\Fixer;
 
 $finder = Finder::create()
-	->in([
-		__DIR__ . '/src',
-		__DIR__ . '/test',
-		__DIR__ . '/templates',
-	])
+	->in(__DIR__)
+	->exclude(
+		[
+			'vendor',
+		]
+	)
+	->ignoreDotFiles(false)
 	->name('*.php')
 ;
 

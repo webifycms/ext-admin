@@ -1,4 +1,5 @@
 <?php
+
 /**
  * The file is part of the "webifycms/ext-admin", WebifyCMS extension package.
  *
@@ -37,9 +38,6 @@ final class AdminModule extends Module
 
 	public AdministrationMenuService $menuService;
 
-    /**
-     * @inheritDoc
-     */
 	public function init(): void
 	{
 		parent::init();
@@ -55,8 +53,11 @@ final class AdminModule extends Module
 			// $this->registerAssets($view);
 		} catch (\Throwable $exception) {
 			throw new TranslatableRuntimeException(
-                'admin.view_component_error', [], $exception->getCode(), $exception
-            );
+				'admin.view_component_error',
+				[],
+				$exception->getCode(),
+				$exception
+			);
 		}
 	}
 
