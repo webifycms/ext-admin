@@ -1,4 +1,5 @@
 <?php
+
 /**
  * The file is part of the "webifycms/ext-admin", WebifyCMS extension package.
  *
@@ -15,16 +16,16 @@ use function Webify\Admin\Infrastructure\administration_path;
 $adminPath = administration_path();
 
 return [
-    [
-        'route' => $adminPath,
-        'pattern' => $adminPath,
-        'normalizer' => false,
-        'suffix' => false,
-    ],
-    [
-        'route' => $adminPath . '/<controller>/<action>',
-        'pattern' => $adminPath . '/<controller:[\w\-]+>/<action:[\w\-]+>',
-        'normalizer' => false,
-        'suffix' => false,
-    ],
+	[
+		'route'      => $adminPath,
+		'pattern'    => $adminPath,
+		'normalizer' => false,
+		'suffix'     => false,
+	],
+	[
+		'route'      => $adminPath . '/<controller>/<action>',
+		'pattern'    => $adminPath . '/<controller:[\w\-]+>/<action:[\w\-]+>',
+		'normalizer' => false,
+		'suffix'     => false,
+	],
 ];

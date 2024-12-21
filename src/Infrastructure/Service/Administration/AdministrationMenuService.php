@@ -1,4 +1,5 @@
 <?php
+
 /**
  * The file is part of the "webifycms/ext-admin", WebifyCMS extension package.
  *
@@ -24,9 +25,8 @@ final class AdministrationMenuService
 	 * The object constructor.
 	 */
 	public function __construct(
-		private readonly View|BaseView $view
-	) {
-	}
+		private readonly BaseView|View $view
+	) {}
 
 	/**
 	 * Add menu items.

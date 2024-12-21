@@ -1,4 +1,5 @@
 <?php
+
 /**
  * The file is part of the "webifycms/ext-admin", WebifyCMS extension package.
  *
@@ -20,54 +21,45 @@ use Webify\Base\Infrastructure\Service\Application\WebApplicationServiceInterfac
 use Webify\Base\Infrastructure\Service\Bootstrap\BaseWebBootstrapService;
 use Webify\Base\Infrastructure\Service\Bootstrap\RegisterDependencyBootstrapInterface;
 use Webify\Base\Infrastructure\Service\Bootstrap\RegisterRoutesBootstrapInterface;
+
 use function Webify\Base\Infrastructure\get_alias;
 use function Webify\Base\Infrastructure\set_alias;
 
 /**
  * Web application bootstrap class of admin extension.
  */
-final class WebBootstrapService extends BaseWebBootstrapService
-    implements RegisterDependencyBootstrapInterface, RegisterRoutesBootstrapInterface
+final class WebBootstrapService extends BaseWebBootstrapService implements RegisterDependencyBootstrapInterface, RegisterRoutesBootstrapInterface
 {
 	private string $adminPath;
 
-    /**
-     * The class constructor
-     */
+	/**
+	 * The class constructor.
+	 */
 	public function __construct(
 		DependencyServiceInterface $dependencyService,
-		DomainApplicationServiceInterface|ApplicationServiceInterface|WebApplicationServiceInterface $appService,
+		ApplicationServiceInterface|DomainApplicationServiceInterface|WebApplicationServiceInterface $appService,
 	) {
-        set_alias('@Admin', '@Extensions/ext-admin');
+		set_alias('@Admin', '@Extensions/ext-admin');
 
 		$this->adminPath = $appService->getAdministrationPath();
 
 		parent::__construct($dependencyService, $appService);
 	}
 
-    /**
-     * @inheritDoc
-     */
 	public function dependencies(): array
 	{
 		return include_once get_alias('@Admin/config/dependencies.php');
 	}
 
-    /**
-     * @inheritDoc
-     */
 	public function init(): void
 	{
 		$this->getApplication()->setModule($this->adminPath, ['class' => AdminModule::class]);
 		$this->registerTranslations();
 	}
 
-    /**
-     * @inheritDoc
-     */
 	public function routes(): array
 	{
-        return include_once get_alias('@Admin/config/routes.php');
+		return include_once get_alias('@Admin/config/routes.php');
 	}
 
 	/**
