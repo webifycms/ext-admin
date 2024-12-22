@@ -13,7 +13,7 @@ declare(strict_types=1);
 
 use Webify\Admin\Domain\Service\Administration\AdministrationServiceInterface;
 use Webify\Admin\Infrastructure\Service\Administration\AdministrationService;
-use Webify\Base\Domain\Service\Application\ApplicationServiceInterface;
+use Webify\Base\Infrastructure\Service\Application\WebApplicationServiceInterface;
 use yii\di\Container;
 
 use function Webify\Base\Infrastructure\dependency;
@@ -25,6 +25,6 @@ $container = dependency()->getContainer();
 
 return [
 	AdministrationServiceInterface::class => fn () => new AdministrationService(
-		$container->get(ApplicationServiceInterface::class)
+		$container->get(WebApplicationServiceInterface::class)
 	),
 ];
