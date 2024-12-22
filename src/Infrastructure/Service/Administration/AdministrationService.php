@@ -14,7 +14,6 @@ declare(strict_types=1);
 namespace Webify\Admin\Infrastructure\Service\Administration;
 
 use Webify\Admin\Domain\Service\Administration\AdministrationServiceInterface;
-use Webify\Base\Domain\Service\Application\ApplicationServiceInterface;
 use Webify\Base\Infrastructure\Service\Application\WebApplicationServiceInterface;
 
 /**
@@ -34,7 +33,7 @@ final class AdministrationService implements AdministrationServiceInterface
 	 * The class constructor.
 	 */
 	public function __construct(
-		ApplicationServiceInterface|WebApplicationServiceInterface $appService
+		WebApplicationServiceInterface $appService
 	) {
 		$this->path   = $appService->getAdministrationPath();
 		$this->url    = $appService->getApplication()->getUrlManager()->createAbsoluteUrl('/' . $this->path);
