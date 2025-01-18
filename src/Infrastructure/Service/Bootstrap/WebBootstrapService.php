@@ -14,9 +14,7 @@ declare(strict_types=1);
 namespace Webify\Admin\Infrastructure\Service\Bootstrap;
 
 use Webify\Admin\Infrastructure\AdminModule;
-use Webify\Base\Domain\Service\Application\ApplicationServiceInterface as DomainApplicationServiceInterface;
 use Webify\Base\Domain\Service\Dependency\DependencyServiceInterface;
-use Webify\Base\Infrastructure\Service\Application\ApplicationServiceInterface;
 use Webify\Base\Infrastructure\Service\Application\WebApplicationServiceInterface;
 use Webify\Base\Infrastructure\Service\Bootstrap\BaseWebBootstrapService;
 use Webify\Base\Infrastructure\Service\Bootstrap\RegisterDependencyBootstrapInterface;
@@ -37,7 +35,7 @@ final class WebBootstrapService extends BaseWebBootstrapService implements Regis
 	 */
 	public function __construct(
 		DependencyServiceInterface $dependencyService,
-		ApplicationServiceInterface|DomainApplicationServiceInterface|WebApplicationServiceInterface $appService,
+		WebApplicationServiceInterface $appService,
 	) {
 		set_alias('@Admin', '@Extensions/ext-admin');
 

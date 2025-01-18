@@ -89,7 +89,7 @@ final class AdminModule extends Module
 	{
 		if ($view->theme instanceof ThemeInterface) {
 			$view->theme->pathMap = array_merge($view->theme->pathMap, [
-				'@Admin/templates' => '@App/themes/' . $view->theme->getId() . '/templates/' . $this->id,
+				'@Admin/templates' => '@App/themes/' . $view->theme->getId() . '/templates/admin',
 			]);
 		}
 	}
