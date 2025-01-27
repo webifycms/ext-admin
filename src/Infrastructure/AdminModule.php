@@ -32,7 +32,7 @@ final class AdminModule extends Module
 
 	public $controllerNamespace = 'Webify\Admin\Presentation\Web\Admin\Controller';
 
-	public $defaultRoute = 'dashboard';
+	public $defaultRoute = 'dashboard/index';
 
 	public $layout = 'main';
 
@@ -49,7 +49,7 @@ final class AdminModule extends Module
 			$this->menuService = new AdministrationMenuService($view);
 
 			$this->registerMenuItems();
-			$this->addThemeSupport($view);
+			//			$this->addThemeSupport($view);
 			// $this->registerAssets($view);
 		} catch (\Throwable $exception) {
 			throw new TranslatableRuntimeException(
