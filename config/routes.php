@@ -11,21 +11,16 @@
  */
 declare(strict_types=1);
 
-use function Webify\Admin\Infrastructure\administration_path;
+use yii\web\GroupUrlRule;
 
-$adminPath = administration_path();
+use function Webify\Base\Infrastructure\administration_path;
 
 return [
-	[
-		'route'      => $adminPath,
-		'pattern'    => $adminPath,
-		'normalizer' => false,
-		'suffix'     => false,
-	],
-	[
-		'route'      => $adminPath . '/<controller>/<action>',
-		'pattern'    => $adminPath . '/<controller:[\w\-]+>/<action:[\w\-]+>',
-		'normalizer' => false,
-		'suffix'     => false,
-	],
+	new GroupUrlRule([
+		'prefix' => administration_path(),
+		'rules'  => [
+			'<controller:[\w\-]+>'                  => '<controller>/index',
+			'<controller:[\w\-]+>/<action:[\w\-]+>' => '<controller>/<action>',
+		],
+	]),
 ];

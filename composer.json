@@ -21,10 +21,7 @@
   "autoload": {
     "psr-4": {
       "Webify\\Admin\\": "src"
-    },
-    "files": [
-      "src/Infrastructure/Helpers.php"
-    ]
+    }
   },
   "autoload-dev": {
     "psr-4": {
