@@ -11,15 +11,16 @@
  */
 declare(strict_types=1);
 
-namespace Webify\Admin\Infrastructure\Service\Administration;
+namespace Webify\Admin\Infrastructure\Service\Menu;
 
+use Webify\Admin\Domain\Service\Menu\MenuServiceInterface;
 use yii\base\View as BaseView;
 use yii\web\View;
 
 /**
  * Administration menu service class that helps to manage the administration menu.
  */
-final class AdministrationMenuService
+final class MenuService implements MenuServiceInterface
 {
 	/**
 	 * The object constructor.
@@ -28,11 +29,6 @@ final class AdministrationMenuService
 		private readonly BaseView|View $view
 	) {}
 
-	/**
-	 * Add menu items.
-	 *
-	 * @param array<array<string, int|string>> $items
-	 */
 	public function addItems(array $items): void
 	{
 		foreach ($items as $item) {

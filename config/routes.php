@@ -11,16 +11,8 @@
  */
 declare(strict_types=1);
 
-use yii\web\GroupUrlRule;
-
-use function Webify\Base\Infrastructure\administration_path;
-
 return [
-	new GroupUrlRule([
-		'prefix' => administration_path(),
-		'rules'  => [
-			'<controller:[\w\-]+>'                  => '<controller>/index',
-			'<controller:[\w\-]+>/<action:[\w\-]+>' => '<controller>/<action>',
-		],
-	]),
+	'<controller:[A-Za-z0-9\-]+>/<action:[\w\-]+>'  => '<controller>/<action>',
+	'<controller:[A-Za-z0-9\-]+>'                   => '<controller>/index',
+	''                                              => 'dashboard/index',
 ];
