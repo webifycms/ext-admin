@@ -11,22 +11,17 @@
  */
 declare(strict_types=1);
 
-namespace Webify\Admin\Infrastructure\Asset;
-
-use yii\web\AssetBundle;
+namespace Webify\Admin\Domain\Service\Menu;
 
 /**
- * Class AdminAsset.
+ * The service helps to register items to the main menu in the admin panel.
  */
-final class AdminAsset extends AssetBundle
+interface MenuServiceInterface
 {
-	public $sourcePath = '@Admin/dist';
-
-	public $css = [
-		'css/app.css',
-	];
-
-	public $js = [
-		'js/app.js',
-	];
+	/**
+	 * Add menu items.
+	 *
+	 * @param array<int, array<string, mixed>> $items
+	 */
+	public function addItems(array $items): void;
 }

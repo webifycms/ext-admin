@@ -13,22 +13,17 @@ declare(strict_types=1);
 
 namespace Webify\Admin\Infrastructure\Presentation\Web\Controller\Admin;
 
-use Webify\Base\Infrastructure\Presentation\Web\Controller\WebController;
+use Webify\Admin\Infrastructure\Presentation\Web\Controller\BaseController;
 
 /**
  * DashboardController.
  */
-final class DashboardController extends WebController
+final class DashboardController extends BaseController
 {
 	public function actionIndex(): string
 	{
 		$this->view->title = 'Dashboard';
 
-		return $this->render('index');
-	}
-
-	public function actionUpdates(): string
-	{
-		return $this->render('updates');
+		return $this->render('dashboard/index');
 	}
 }

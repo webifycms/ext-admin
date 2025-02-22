@@ -11,7 +11,10 @@
  */
 declare(strict_types=1);
 
+use Webify\Admin\Domain\Service\Menu\MenuServiceInterface;
+use Webify\Admin\Infrastructure\Service\Menu\MenuService;
 use yii\di\Container;
+use yii\web\Application;
 
 use function Webify\Base\Infrastructure\dependency;
 
@@ -21,6 +24,8 @@ use function Webify\Base\Infrastructure\dependency;
 $container = dependency()->getContainer();
 
 return [
-	'definitions' => [],
+	'definitions' => [
+		MenuServiceInterface::class => fn (Application $application) => new MenuService($application->getView()),
+	],
 	'singletons'  => [],
 ];
