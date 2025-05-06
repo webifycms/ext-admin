@@ -11,17 +11,17 @@
  */
 declare(strict_types=1);
 
-namespace Webify\Admin\Domain\Service\Menu;
+namespace Webify\Admin\Infrastructure\Service\Menu;
 
 /**
- * The service helps to register items to the main menu in the admin panel.
+ * Interface for registering primary menu items of the extension for the administration.
  */
-interface MenuServiceInterface
+interface PrimaryMenuItemServiceInterface
 {
 	/**
-	 * Add menu items.
+	 * Add items to the primary menu.
 	 *
-	 * @param array<int, array<string, mixed>> $items
+	 * @return array<array<string, mixed>>
 	 */
-	public function addItems(array $items): void;
+	public function items(): array;
 }

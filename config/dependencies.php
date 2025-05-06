@@ -11,21 +11,11 @@
  */
 declare(strict_types=1);
 
-use Webify\Admin\Domain\Service\Menu\MenuServiceInterface;
-use Webify\Admin\Infrastructure\Service\Menu\MenuService;
-use yii\di\Container;
-use yii\web\Application;
-
-use function Webify\Base\Infrastructure\dependency;
-
-/**
- * @var Container $container
- */
-$container = dependency()->getContainer();
+use Webify\Admin\Infrastructure\Service\ViewInjector\PrimaryMenuViewInjectorService;
 
 return [
-	'definitions' => [
-		MenuServiceInterface::class => fn (Application $application) => new MenuService($application->getView()),
+	'definitions' => [],
+	'singletons'  => [
+		PrimaryMenuViewInjectorService::class => fn () => new PrimaryMenuViewInjectorService(),
 	],
-	'singletons'  => [],
 ];
