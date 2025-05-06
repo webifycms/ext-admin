@@ -18,7 +18,7 @@ use Webify\Base\Infrastructure\Component\Theme\ThemeComponent;
 use Webify\Base\Infrastructure\Presentation\Web\Controller\WebController;
 
 /**
- * Base controller class for this extension, it helps to set templates path and template theme support.
+ * Base controller class for this extension, it helps to set a template path and template theme support.
  */
 class BaseController extends WebController
 {
