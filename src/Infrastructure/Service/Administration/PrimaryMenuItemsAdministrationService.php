@@ -11,7 +11,9 @@
  */
 declare(strict_types=1);
 
-namespace Webify\Admin\Infrastructure\Service\Menu;
+namespace Webify\Admin\Infrastructure\Service\Administration;
+
+use Webify\Base\Infrastructure\Service\Administration\PrimaryMenuItemsAdministrationServiceInterface;
 
 use function Webify\Base\Infrastructure\administration_url;
 use function Webify\Base\Infrastructure\url;
@@ -19,24 +21,22 @@ use function Webify\Base\Infrastructure\url;
 /**
  * Service class to register primary menu items for the admin extension.
  */
-final class PrimaryMenuItemService implements PrimaryMenuItemServiceInterface
+final class PrimaryMenuItemsAdministrationService implements PrimaryMenuItemsAdministrationServiceInterface
 {
 	public function __construct(
-		private readonly string $assetsBaseUrl
+		private readonly string $assetsUrl,
 	) {}
 
 	/**
-	 * {@inheritDoc}
-	 *
 	 * TODO: Currently the Menu widget does not support img tag for icon, should replaced when the request is merged.
 	 */
-	public function items(): array
+	public function getItems(): array
 	{
 		return [
 			[
 				'label'     => sprintf(
 					'<img src="%s" alt="%s"><div>Dashboard</div>',
-					url($this->assetsBaseUrl . '/icons/dashboard.svg'),
+					url($this->assetsUrl . '/icons/dashboard.svg'),
 					'Dashboard'
 				),
 				'encode'    => false,
