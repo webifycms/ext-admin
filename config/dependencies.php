@@ -11,11 +11,7 @@
  */
 declare(strict_types=1);
 
-use Webify\Admin\Infrastructure\Service\ViewInjector\PrimaryMenuViewInjectorService;
-
 return [
 	'definitions' => [],
-	'singletons'  => [
-		PrimaryMenuViewInjectorService::class => fn () => new PrimaryMenuViewInjectorService(),
-	],
+	'singletons'  => [],
 ];

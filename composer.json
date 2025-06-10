@@ -31,8 +31,16 @@
   "optimize-autoloader": true,
   "repositories": [
     {
+<<<<<<< Updated upstream
       "type": "vcs",
       "url": "https://github.com/webifycms/ext-base"
+=======
+      "type": "path",
+      "url": "../ext-base",
+      "options": {
+        "symlink": true
+      }
+>>>>>>> Stashed changes
     },
     {
       "type": "vcs",
