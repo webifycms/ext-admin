@@ -35,10 +35,6 @@
       "url": "https://github.com/webifycms/ext-base"
     },
     {
-      "type": "vcs",
-      "url": "https://github.com/webifycms/dev-tools"
-    },
-    {
       "type": "composer",
       "url": "https://asset-packagist.org"
     }
