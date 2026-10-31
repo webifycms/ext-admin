@@ -1,0 +1,21 @@
+# phpstorm project files
+/.idea
+
+# vscode project files
+/.vscode
+
+# windows thumbnail cache
+Thumbs.db
+
+# composer
+/vendor/
+composer.phar
+composer.local.json
+composer.local.lock
+
+# Mac DS_Store Files
+.DS_Store
+
+# ignores the cache files
+.php-cs-fixer.cache
+/.phpunit.cache
