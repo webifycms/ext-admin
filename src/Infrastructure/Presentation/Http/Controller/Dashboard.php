@@ -14,27 +14,24 @@ declare(strict_types=1);
 namespace Webify\Admin\Infrastructure\Presentation\Http\Controller;
 
 use Psr\Http\Message\{ResponseFactoryInterface, ResponseInterface, ServerRequestInterface, StreamFactoryInterface};
-use Webify\Base\Infrastructure\Contract\ViewInterface;
+use Webify\Base\Infrastructure\Contract\Template\TemplateViewInterface;
 use Webify\Base\Infrastructure\Presentation\Http\Controller\Controller;
 
 /**
- * Dashboard controller.
+ * Shows the administration home page.
  */
 final readonly class Dashboard extends Controller
 {
-	/**
-	 * The constructor.
-	 */
 	public function __construct(
 		ResponseFactoryInterface $responseFactory,
 		StreamFactoryInterface $streamFactory,
-		ViewInterface $view,
+		TemplateViewInterface $view,
 	) {
 		parent::__construct($responseFactory, $streamFactory, $view);
 	}
 
 	/**
-	 * Handles the HTTP request/response lifecycle of the dashboard page.
+	 * Shows the dashboard inside the theme's admin frame.
 	 */
 	public function __invoke(ServerRequestInterface $request): ResponseInterface
 	{

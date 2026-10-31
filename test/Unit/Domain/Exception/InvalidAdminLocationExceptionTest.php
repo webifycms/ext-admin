@@ -19,7 +19,7 @@ use Webify\Admin\Domain\Exception\InvalidAdminLocationException;
 use Webify\Base\Contract\Exception\TranslatableExceptionInterface;
 
 /**
- * InvalidAdminLocationExceptionTest tests the invalid administration location exception.
+ * Proves the errors about the administration's address say what went wrong.
  *
  * @internal
  */
@@ -28,9 +28,6 @@ use Webify\Base\Contract\Exception\TranslatableExceptionInterface;
 #[CoversFunction('sprintf')]
 final class InvalidAdminLocationExceptionTest extends TestCase
 {
-	/**
-	 * Test that the exception implements the TranslatableExceptionInterface.
-	 */
 	#[Test]
 	public function testImplementsTranslatableExceptionInterface(): void
 	{
@@ -38,7 +35,7 @@ final class InvalidAdminLocationExceptionTest extends TestCase
 	}
 
 	/**
-	 * Test that an empty location reports itself as such.
+	 * An empty location points to a specific problem and has no extra details.
 	 */
 	#[Test]
 	public function testForEmptyExplainsItself(): void
@@ -52,7 +49,7 @@ final class InvalidAdminLocationExceptionTest extends TestCase
 	}
 
 	/**
-	 * Test that an invalid type names the offending type as a parameter.
+	 * A wrong type names the type that was given.
 	 */
 	#[Test]
 	public function testForInvalidTypeNamesTheType(): void
@@ -65,7 +62,7 @@ final class InvalidAdminLocationExceptionTest extends TestCase
 	}
 
 	/**
-	 * Test that an invalid host names the offending host.
+	 * A bad host names the host that was given.
 	 */
 	#[Test]
 	public function testForInvalidHostNamesTheHost(): void
@@ -78,7 +75,7 @@ final class InvalidAdminLocationExceptionTest extends TestCase
 	}
 
 	/**
-	 * Test that an invalid path names the offending path.
+	 * A bad path names the path that was given.
 	 */
 	#[Test]
 	public function testForInvalidPathNamesThePath(): void

@@ -13,17 +13,16 @@ declare(strict_types=1);
 
 namespace Webify\Admin\Infrastructure\Container;
 
-use Webify\Admin\Domain\Exception\InvalidAdminLocationException;
 use Webify\Admin\Domain\ValueObject\AdminLocation;
 use Webify\Admin\Infrastructure\Service\Administration;
 use Webify\Base\Application\Service\ConfigInterface;
-use Webify\Base\Infrastructure\Contract\{AdministrationInterface, DefinitionsInterface};
+use Webify\Base\Infrastructure\Contract\Administration\AdministrationInterface;
+use Webify\Base\Infrastructure\Contract\Container\DefinitionsInterface;
 
 use function DI\{autowire, factory};
-use function get_debug_type;
 
 /**
- * Service definitions.
+ * Sets up the pieces needed to run the administration.
  */
 final readonly class ServiceDefinitions implements DefinitionsInterface
 {
@@ -33,38 +32,28 @@ final readonly class ServiceDefinitions implements DefinitionsInterface
 	public static function getDefinitions(): array
 	{
 		return [
-			// -------------------------------------------------------------------------
-			// Administration path and area resolver
-			// The path is validated lazily on first use, so a bad `adminPath` fails there.
-			// -------------------------------------------------------------------------
-			AdminLocation::class                            => factory(
+			// The address of the administration, read from settings and checked
+			// the first time it is used.
+			AdminLocation::class           => factory(
 				static function (ConfigInterface $config): AdminLocation {
-					/** @var string $host */
-					$host = $config->get('adminHost', '');
+					/** @var null|string $host */
+					$host = $config->get('adminHost');
 
-					/** @var string $path */
-					$path = $config->get('adminPath', '');
+					/** @var null|string $path */
+					$path = $config->get('adminPath');
 
-					foreach ([$host, $path] as $value) {
-						if (!is_string($value)) {
-							throw InvalidAdminLocationException::forInvalidType(get_debug_type($value));
-						}
-					}
+					/** @var null|string $scheme */
+					$scheme = $config->get('adminScheme');
 
-					if ('' === $host && '' === $path) {
-						$host = null;
-						$path = AdministrationInterface::DEFAULT_PATH;
-					}
+					/** @var null|int $port */
+					$port = $config->get('adminPort');
 
-					return AdminLocation::create($host, $path);
+					return AdminLocation::create($host, $path, $scheme, $port);
 				}
 			),
-			// -------------------------------------------------------------------------
-			// Autowired rather than `create()`: the service takes three
-			// container services through its constructor, and only autowiring
-			// resolves a constructor's parameters by type.
-			// -------------------------------------------------------------------------
-			AdministrationInterface::class                  => autowire(Administration::class),
+			// The service uses other pieces of the application, so it is let
+			// the container build it with the things it needs.
+			AdministrationInterface::class => autowire(Administration::class),
 		];
 	}
 }

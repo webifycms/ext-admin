@@ -15,21 +15,22 @@ namespace Webify\Admin\Infrastructure\Extension;
 
 use Webify\Admin\Infrastructure\Provider\{RoutesRegister, Service};
 use Webify\Base\Domain\ValueObject\TemplatePath;
-use Webify\Base\Infrastructure\Contract\{AssetsProviderInterface, ExtensionInterface};
+use Webify\Base\Infrastructure\Contract\Assets\ProviderInterface;
+use Webify\Base\Infrastructure\Contract\Extension\ExtensionInterface;
 
 /**
- * The admin extension.
+ * The entry point for the administration extension.
+ *
+ * It tells the application what the extension is, where its files are, and
+ * which pieces to register.
  */
 final readonly class AdminExtension implements ExtensionInterface
 {
 	/**
-	 * @var string the root path of the extension
+	 * The folder this extension is in.
 	 */
 	private string $rootPath;
 
-	/**
-	 * The constructor.
-	 */
 	public function __construct()
 	{
 		$this->rootPath = dirname(__DIR__, 3);
@@ -89,7 +90,15 @@ final readonly class AdminExtension implements ExtensionInterface
 	/**
 	 * {@inheritDoc}
 	 */
-	public function getAssetsProvider(): ?AssetsProviderInterface
+	public function getRootPath(): string
+	{
+		return $this->rootPath;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public function getAssetsProvider(): ?ProviderInterface
 	{
 		return null;
 	}

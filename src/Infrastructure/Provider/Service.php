@@ -14,12 +14,12 @@ declare(strict_types=1);
 namespace Webify\Admin\Infrastructure\Provider;
 
 use Webify\Admin\Infrastructure\Container\ServiceDefinitions;
-use Webify\Base\Infrastructure\Contract\ServiceProviderInterface;
+use Webify\Base\Infrastructure\Contract\Provider\ServiceInterface;
 
 /**
- * Description.
+ * Adds the administration's services to the application.
  */
-final readonly class Service implements ServiceProviderInterface
+final readonly class Service implements ServiceInterface
 {
 	/**
 	 * {@inheritDoc}

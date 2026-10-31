@@ -8,7 +8,7 @@
 > It's not quite ready for use in productions, but we'd love for you to give it a try,
 > Don't mind to [log bugs](https://github.com/webifycms/app/issues) and help us improve it! Thanks for your support.
 
-`ext-admin` is an extension of WebifyCMS which provides basic administration features for the application.
+`ext-admin` is an extension of WebifyCMS which provides administration features for the application.
 
 > This is not a standalone application, it is an extension of WebifyCMS.
 

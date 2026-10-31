@@ -20,15 +20,14 @@ use Webify\Base\Contract\Translation\ExceptionTranslation;
 use function sprintf;
 
 /**
- * Exception thrown when the configured administration location is empty or invalid.
+ * Stopped because the administration's address is missing or has characters
+ * that cannot appear in a web address.
  */
 final class InvalidAdminLocationException extends InvalidArgumentException implements TranslatableExceptionInterface
 {
 	/**
-	 * Private constructor enforces the use of the factory methods to initiate this exception.
-	 *
-	 * @param ExceptionTranslation $translation the translation object for this exception
-	 * @param string               $message     the exception message (optional)
+	 * @param ExceptionTranslation $translation the message to show in the user's language
+	 * @param string               $message     a message for logs
 	 */
 	private function __construct(
 		public readonly ExceptionTranslation $translation,
@@ -38,8 +37,8 @@ final class InvalidAdminLocationException extends InvalidArgumentException imple
 	}
 
 	/**
-	 * Factory method to initiate when the administration path is empty,
-	 * which would collide with the site root.
+	 * The administration has no address at all, which would put it on the
+	 * site's home page and cover every request.
 	 */
 	public static function forEmpty(): self
 	{
@@ -53,9 +52,9 @@ final class InvalidAdminLocationException extends InvalidArgumentException imple
 	}
 
 	/**
-	 * Factory method to initiate when the administration location type is invalid.
+	 * The value given for the location type was not a string.
 	 *
-	 * @param string $type the invalid administration location
+	 * @param string $type the kind of value that was given
 	 */
 	public static function forInvalidType(string $type): self
 	{
@@ -73,9 +72,9 @@ final class InvalidAdminLocationException extends InvalidArgumentException imple
 	}
 
 	/**
-	 * Factory method to initiate when the administration host contains unsupported characters.
+	 * The host name has a character or shape that cannot be used.
 	 *
-	 * @param string $host the invalid administration host
+	 * @param string $host the host name that was given
 	 */
 	public static function forInvalidHost(string $host): self
 	{
@@ -93,9 +92,9 @@ final class InvalidAdminLocationException extends InvalidArgumentException imple
 	}
 
 	/**
-	 * Factory method to initiate when the administration path contains unsupported characters.
+	 * The path has a character or shape that cannot be used.
 	 *
-	 * @param string $path the invalid administration path
+	 * @param string $path the path that was given
 	 */
 	public static function forInvalidPath(string $path): self
 	{

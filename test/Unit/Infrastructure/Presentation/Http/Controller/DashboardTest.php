@@ -18,11 +18,11 @@ use PHPUnit\Framework\Attributes\{CoversClass, Test, UsesClass};
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\ServerRequestInterface;
 use Webify\Admin\Infrastructure\Presentation\Http\Controller\Dashboard;
-use Webify\Base\Infrastructure\Contract\ViewInterface;
+use Webify\Base\Infrastructure\Contract\Template\TemplateViewInterface;
 use Webify\Base\Infrastructure\Presentation\Http\Controller\Controller;
 
 /**
- * DashboardTest tests the dashboard page controller.
+ * Proves the dashboard page uses the right frame and returns a page.
  *
  * @internal
  */
@@ -32,22 +32,15 @@ use Webify\Base\Infrastructure\Presentation\Http\Controller\Controller;
 final class DashboardTest extends TestCase
 {
 	/**
-	 * Test that the dashboard renders under the named admin shell and returns a 200 response.
-	 *
-	 * The layout is asserted as an explicit argument because it is the whole
-	 * point of the render contract: the shell moved to the active theme, so
-	 * the extension no longer leans on a default layout of its own and names
-	 * the chrome instead (`admin/layouts/main`, the mixed form for a
-	 * namespaced layout). A controller that rendered with the default would
-	 * still produce markup here — it would simply land in the theme's public
-	 * chrome, which is the regression this catches.
+	 * The dashboard is wrapped in the theme's admin frame, not in the
+	 * theme's public frame.
 	 */
 	#[Test]
 	public function testInvokeRendersTheDashboardUnderTheNamedAdminLayout(): void
 	{
 		$factory = new Psr17Factory();
 
-		$view = self::createMock(ViewInterface::class);
+		$view = self::createMock(TemplateViewInterface::class);
 		$view->expects(self::once())
 			->method('render')
 			->with(

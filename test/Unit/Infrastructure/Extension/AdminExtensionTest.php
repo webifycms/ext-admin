@@ -17,17 +17,14 @@ use PHPUnit\Framework\Attributes\{CoversClass, CoversFunction, CoversMethod, Tes
 use PHPUnit\Framework\TestCase;
 use Webify\Admin\Infrastructure\Extension\AdminExtension;
 use Webify\Admin\Infrastructure\Provider\{RoutesRegister, Service};
-use Webify\Base\Infrastructure\Contract\{
-	BootstrapServiceProviderInterface,
-	ExtensionInterface,
-	ServiceProviderInterface,
-};
+use Webify\Base\Infrastructure\Contract\Extension\ExtensionInterface;
+use Webify\Base\Infrastructure\Contract\Provider\{BootstrapServiceInterface, ServiceInterface};
 
 use function dirname;
 use function sprintf;
 
 /**
- * AdminExtensionTest tests the extension entry point metadata.
+ * Proves the extension gives the application the pieces it needs.
  *
  * @internal
  */
@@ -45,12 +42,12 @@ use function sprintf;
 final class AdminExtensionTest extends TestCase
 {
 	/**
-	 * @var AdminExtension the admin extension instance
+	 * The extension being tested.
 	 */
 	private AdminExtension $extension;
 
 	/**
-	 * {@inheritdoc}
+	 * {@inheritDoc}
 	 */
 	protected function setUp(): void
 	{
@@ -58,7 +55,7 @@ final class AdminExtensionTest extends TestCase
 	}
 
 	/**
-	 * The extension must satisfy the ext-base contract it is discovered through.
+	 * The extension must fit the contract the application looks for.
 	 */
 	#[Test]
 	public function testImplementsExtensionInterface(): void
@@ -67,8 +64,7 @@ final class AdminExtensionTest extends TestCase
 	}
 
 	/**
-	 * The id is the stable key the kernel discovers extensions by and resolves templates
-	 * through, so it must not drift once anything depends on it.
+	 * The identity must stay the same once other pieces depend on it.
 	 *
 	 * @see ExtensionInterface::getId()
 	 */
@@ -79,7 +75,7 @@ final class AdminExtensionTest extends TestCase
 	}
 
 	/**
-	 * The slug is a URL-facing label rather than an identity, so it only mirrors the id here.
+	 * The address label mirrors the identity for now.
 	 *
 	 * @see ExtensionInterface::getSlug()
 	 */
@@ -90,7 +86,7 @@ final class AdminExtensionTest extends TestCase
 	}
 
 	/**
-	 * The display name is what a human reads in the admin.
+	 * The name shown to a person.
 	 *
 	 * @see ExtensionInterface::getName()
 	 */
@@ -101,8 +97,7 @@ final class AdminExtensionTest extends TestCase
 	}
 
 	/**
-	 * The version is a hand-maintained release marker, so a release has to bump it in the
-	 * same change as the package.
+	 * The version has to be changed when the package is released.
 	 *
 	 * @see ExtensionInterface::getVersion()
 	 */
@@ -113,8 +108,7 @@ final class AdminExtensionTest extends TestCase
 	}
 
 	/**
-	 * The extension lives in `src/Infrastructure/Extension`, so its root is three levels up
-	 * and the templates directory sits beside `src`.
+	 * The templates live in the `templates` folder next to `src`.
 	 *
 	 * @see ExtensionInterface::getTemplatePath()
 	 */
@@ -133,11 +127,8 @@ final class AdminExtensionTest extends TestCase
 	}
 
 	/**
-	 * The extension yields the provider that registers its definitions and the
-	 * one that registers its routes, in that order.
-	 *
-	 * Both are needed: the first contributes the container bindings, the second
-	 * runs at bootstrap to map the administration's routes.
+	 * Two providers are given: one to add pieces to the container, one to
+	 * add routes when the application starts.
 	 *
 	 * @see ExtensionInterface::getProviders()
 	 */
@@ -152,9 +143,7 @@ final class AdminExtensionTest extends TestCase
 	}
 
 	/**
-	 * Whatever is returned must be usable by the container, so guard the shape of
-	 * the list: every entry is either a definitions provider or a bootstrap
-	 * provider — the two contracts the extension point accepts.
+	 * Each provider must be one of the kinds the application expects.
 	 *
 	 * @see ExtensionInterface::getProviders()
 	 */
@@ -163,16 +152,15 @@ final class AdminExtensionTest extends TestCase
 	{
 		foreach ($this->extension->getProviders() as $provider) {
 			self::assertTrue(
-				$provider instanceof ServiceProviderInterface
-				|| $provider instanceof BootstrapServiceProviderInterface,
+				$provider instanceof ServiceInterface
+				|| $provider instanceof BootstrapServiceInterface,
 				sprintf('Unexpected provider of type %s.', $provider::class)
 			);
 		}
 	}
 
 	/**
-	 * The provider's definitions are what the container actually receives, so a provider
-	 * that returned nothing would pass every test above while registering no definitions.
+	 * The container pieces must actually come from the providers.
 	 *
 	 * @see ExtensionInterface::getProviders()
 	 */
@@ -182,7 +170,7 @@ final class AdminExtensionTest extends TestCase
 		$definitions = [];
 
 		foreach ($this->extension->getProviders() as $provider) {
-			if (!$provider instanceof ServiceProviderInterface) {
+			if (!$provider instanceof ServiceInterface) {
 				continue;
 			}
 
@@ -193,8 +181,8 @@ final class AdminExtensionTest extends TestCase
 	}
 
 	/**
-	 * The extension ships no assets of its own — front-end assets come from the theme — so
-	 * the contract's "nothing to publish" case is the correct answer here.
+	 * The extension has no separate assets provider — the theme provides the
+	 * look and feel.
 	 *
 	 * @see ExtensionInterface::getAssetsProvider()
 	 */

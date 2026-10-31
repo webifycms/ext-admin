@@ -15,16 +15,14 @@ namespace Webify\Admin\Infrastructure\Provider;
 
 use Psr\Container\ContainerInterface;
 use Webify\Admin\Infrastructure\Presentation\Http\Routes;
-use Webify\Base\Infrastructure\Contract\{
-	AdministrationInterface,
-	BootstrapServiceProviderInterface,
-};
+use Webify\Base\Infrastructure\Contract\Administration\AdministrationInterface;
+use Webify\Base\Infrastructure\Contract\Provider\BootstrapServiceInterface;
 use Webify\Base\Infrastructure\Contract\Routing\RouterInterface;
 
 /**
- * Description.
+ * Adds the administration routes when the application starts.
  */
-final class RoutesRegister implements BootstrapServiceProviderInterface
+final class RoutesRegister implements BootstrapServiceInterface
 {
 	/**
 	 * {@inheritDoc}

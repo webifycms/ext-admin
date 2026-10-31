@@ -17,11 +17,11 @@ use PHPUnit\Framework\Attributes\{CoversClass, Test};
 use PHPUnit\Framework\TestCase;
 use Webify\Admin\Infrastructure\Presentation\Http\Controller\Dashboard as DashboardController;
 use Webify\Admin\Infrastructure\Presentation\Http\Routes;
-use Webify\Base\Infrastructure\Contract\AdministrationInterface;
+use Webify\Base\Infrastructure\Contract\Administration\AdministrationInterface;
 use Webify\Base\Infrastructure\Contract\Routing\RouterInterface;
 
 /**
- * RoutesTest tests the administration's route registration.
+ * Proves the routes are put under the administration address.
  *
  * @internal
  */
@@ -29,12 +29,8 @@ use Webify\Base\Infrastructure\Contract\Routing\RouterInterface;
 final class RoutesTest extends TestCase
 {
 	/**
-	 * Test that the administration's own path is what the routes are grouped under.
-	 *
-	 * The group prefix and the value `isAdministration()` compares a scope
-	 * against are one and the same — the contract documents `getPath()` as
-	 * feeding the group — so registering under anything else would separate
-	 * where the routes live from the answer to "is this the administration?".
+	 * The route group uses the administration's own address, so the place
+	 * where routes live matches the place the check looks for them.
 	 */
 	#[Test]
 	public function testTheAdministrationPathFeedsTheRouteGroup(): void
@@ -53,11 +49,8 @@ final class RoutesTest extends TestCase
 	}
 
 	/**
-	 * Test that the group callback is given a router to register routes with.
-	 *
-	 * The routes themselves live inside the callback, so a callback invoked
-	 * with anything other than the in-scope router would fail at registration
-	 * time rather than being caught here.
+	 * The routes are added inside the group, and the dashboard goes to the
+	 * root of the administration address.
 	 */
 	#[Test]
 	public function testTheGroupCallbackReceivesARouter(): void
@@ -74,11 +67,6 @@ final class RoutesTest extends TestCase
 					function (mixed $callback): bool {
 						self::assertIsCallable($callback);
 
-						// Run it against a router mock: the callback's own
-						// body is where routes would be registered, and the
-						// signature it is invoked with is the contract. The
-						// dashboard is mapped at the group root, so the route
-						// lands at the administration path itself.
 						$inner = $this->createMock(RouterInterface::class);
 						$inner->expects(self::once())
 							->method('get')

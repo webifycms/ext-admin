@@ -17,10 +17,11 @@ use PHPUnit\Framework\Attributes\{CoversClass, Test, UsesClass};
 use PHPUnit\Framework\TestCase;
 use Webify\Admin\Infrastructure\Container\ServiceDefinitions;
 use Webify\Admin\Infrastructure\Provider\Service;
-use Webify\Base\Infrastructure\Contract\{AdministrationInterface, ServiceProviderInterface};
+use Webify\Base\Infrastructure\Contract\Administration\AdministrationInterface;
+use Webify\Base\Infrastructure\Contract\Provider\ServiceInterface;
 
 /**
- * ServiceTest tests the extension's service provider.
+ * Proves the service provider gives the container the needed pieces.
  *
  * @internal
  */
@@ -29,22 +30,17 @@ use Webify\Base\Infrastructure\Contract\{AdministrationInterface, ServiceProvide
 final class ServiceTest extends TestCase
 {
 	/**
-	 * Test that the provider implements the service provider contract.
+	 * The provider fits the contract.
 	 */
 	#[Test]
 	public function testImplementsServiceProviderInterface(): void
 	{
-		self::assertInstanceOf(ServiceProviderInterface::class, new Service());
+		self::assertInstanceOf(ServiceInterface::class, new Service());
 	}
 
 	/**
-	 * Test that the provider hands the container the service definitions group.
-	 *
-	 * The provider is the only thing the extension entry point yields to the
-	 * container builder, so a provider forwarding nothing would leave every
-	 * definition above it unregistered. The keys are compared rather than the
-	 * arrays: each call builds fresh definition helpers, which are equal in
-	 * content but not identical as objects.
+	 * The provider passes on the definitions it is given, without adding
+	 * others of its own.
 	 */
 	#[Test]
 	public function testGetDefinitionsForwardsTheServiceDefinitionsGroup(): void

@@ -20,40 +20,58 @@ use function preg_match;
 use function trim;
 
 /**
- * The administration location value object.
+ * Holds the address where the administration lives.
+ *
+ * It keeps the host, optional scheme and port, and path in one place,
+ * normalizes them the same way every time, and refuses a location that
+ * would put the administration on the site's home address.
  */
 final readonly class AdminLocation
 {
 	/**
-	 * Allowed host format.
+	 * The pattern a host name must match.
 	 */
 	private const string HOST_FORMAT = '/^(?=.{1,253}$)(?!-)[a-z0-9-]{1,63}(?<!-)(?:\.(?!-)[a-z0-9-]{1,63}(?<!-))*$/';
 
 	/**
-	 * Allowed path format: one or more segments of letters, numbers, hyphens and underscores.
+	 * The pattern a path must match.
 	 */
 	private const string PATH_FORMAT = '/^[a-z0-9_-]+(?:\/[a-z0-9_-]+)*$/';
 
 	/**
-	 * The private constructor enforces to use factory methods to initiate this object.
-	 *
-	 * @param null|string $host the host can be null, when the location is only path basis
-	 * @param string      $path when the host is available, the path can be empty
+	 * The pattern a scheme must match.
+	 */
+	private const string SCHEME_FORMAT = '/^[a-z][a-z0-9+.-]*$/';
+
+	/**
+	 * @param null|string $host   the host name, or null if the location uses a path only
+	 * @param string      $path   the path, or an empty string if the location uses a host only
+	 * @param null|string $scheme the scheme, or null to use the site's default
+	 * @param null|int    $port   the port, or null for the default port
 	 */
 	private function __construct(
 		public ?string $host,
-		public string $path
+		public string $path,
+		public ?string $scheme = null,
+		public ?int $port = null
 	) {}
 
 	/**
-	 * Factory method to create the object from a raw value.
+	 * Builds a location from the host, path, scheme and port values.
 	 *
-	 * @throws InvalidAdminLocationException if the value is empty or has an invalid format
+	 * Both host and path are made lower case and trimmed. The host is dropped
+	 * if left empty. The path is dropped of leading and trailing slashes.
+	 * Scheme is normalized to lower case when provided. Port must be between
+	 * 1 and 65535. If nothing is left, the administration would be on the
+	 * home address, so that is refused.
+	 *
+	 * @throws InvalidAdminLocationException if the location is empty or uses invalid characters
 	 */
-	public static function create(?string $host, ?string $path): self
+	public static function create(?string $host, ?string $path, ?string $scheme = null, ?int $port = null): self
 	{
-		$host = null === $host ? '' : mb_strtolower(trim($host));
-		$path = trim(mb_strtolower($path ?? ''), " \t\n\r\0\x0B/");
+		$host   = null === $host ? '' : mb_strtolower(trim($host));
+		$path   = trim(mb_strtolower($path ?? ''), " \t\n\r\0\x0B/");
+		$scheme = null === $scheme ? null : mb_strtolower(trim($scheme));
 
 		if ('' === $host && '' === $path) {
 			throw InvalidAdminLocationException::forEmpty();
@@ -67,11 +85,19 @@ final readonly class AdminLocation
 			throw InvalidAdminLocationException::forInvalidPath($path);
 		}
 
-		return new self('' === $host ? null : $host, $path);
+		if (null !== $scheme && ('' === $scheme || 1 !== preg_match(self::SCHEME_FORMAT, $scheme))) {
+			throw InvalidAdminLocationException::forInvalidType($scheme);
+		}
+
+		if (null !== $port && (1 > $port || 65535 < $port)) {
+			throw InvalidAdminLocationException::forInvalidType((string) $port);
+		}
+
+		return new self('' === $host ? null : $host, $path, $scheme, $port);
 	}
 
 	/**
-	 * Checks weather has host.
+	 * Says whether the location uses a host name.
 	 */
 	public function hasHost(): bool
 	{
@@ -79,11 +105,13 @@ final readonly class AdminLocation
 	}
 
 	/**
-	 * Equality check based on the value.
+	 * Says whether this location is the same as another.
 	 */
 	public function equals(self $other): bool
 	{
 		return $this->host === $other->host
-			&& $this->path === $other->path;
+			&& $this->path === $other->path
+			&& $this->scheme === $other->scheme
+			&& $this->port === $other->port;
 	}
 }

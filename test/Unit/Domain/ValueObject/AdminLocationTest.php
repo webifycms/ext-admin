@@ -19,15 +19,9 @@ use Webify\Admin\Domain\Exception\InvalidAdminLocationException;
 use Webify\Admin\Domain\ValueObject\AdminLocation;
 
 /**
- * AdminLocationTest tests the administration location value object.
+ * Proves the address of the administration is kept the same way every time.
  *
- * The object owns every normalization the administration's route group and
- * its URL are built from, so `admin`, `/admin/` and ` /admin ` have to reach
- * one value here or they reach different route groups later.
- *
- * `create()` takes the host first and the path second, mirroring the value
- * object's own shape: the host is the optional constraint and the path is the
- * value that is always present.
+ * Small differences in writing the address must lead to the same place.
  *
  * @internal
  */
@@ -36,8 +30,8 @@ use Webify\Admin\Domain\ValueObject\AdminLocation;
 final class AdminLocationTest extends TestCase
 {
 	/**
-	 * Test that the path arrives normalized: lowercase, without surrounding
-	 * slashes or whitespace.
+	 * The path is made lower case and leading and trailing slashes and
+	 * spaces are removed.
 	 */
 	#[Test]
 	public function testCreateNormalizesThePath(): void
@@ -48,10 +42,8 @@ final class AdminLocationTest extends TestCase
 	}
 
 	/**
-	 * Test that the host arrives lowercased and trimmed.
-	 *
-	 * Hosts are compared case-insensitively, so a location holding ` Example.TEST `
-	 * would otherwise never equal one holding `example.test`.
+	 * The host is made lower case and spaces are removed, so addresses
+	 * written differently still match each other.
 	 */
 	#[Test]
 	public function testCreateNormalizesTheHost(): void
@@ -63,7 +55,7 @@ final class AdminLocationTest extends TestCase
 	}
 
 	/**
-	 * Test that a path-only location has no host.
+	 * A location given only a path has no host.
 	 */
 	#[Test]
 	public function testAPathOnlyLocationHasNoHost(): void
@@ -75,10 +67,9 @@ final class AdminLocationTest extends TestCase
 	}
 
 	/**
-	 * Test that a host-only location keeps an empty path.
-	 *
-	 * The path may be empty when the host is available — the administration
-	 * then lives at that host's root — but only then.
+	 * A location given only a host keeps an empty path. The only time an
+	 * empty path is allowed is when there is a host to put the administration
+	 * at.
 	 */
 	#[Test]
 	public function testAHostOnlyLocationKeepsAnEmptyPath(): void
@@ -90,10 +81,8 @@ final class AdminLocationTest extends TestCase
 	}
 
 	/**
-	 * Test that a location with neither host nor path is refused.
-	 *
-	 * An empty location would place the administration on the site root and
-	 * make every request the administration's.
+	 * Leaving out both the host and the path would put the administration on
+	 * the home address and cover every request, so it is refused.
 	 */
 	#[Test]
 	public function testALocationWithoutHostOrPathIsRefused(): void
@@ -104,7 +93,7 @@ final class AdminLocationTest extends TestCase
 	}
 
 	/**
-	 * Test that a host containing unsupported characters is refused.
+	 * A host with a space in it is refused.
 	 */
 	#[Test]
 	public function testAHostWithUnsupportedCharactersIsRefused(): void
@@ -115,10 +104,9 @@ final class AdminLocationTest extends TestCase
 	}
 
 	/**
-	 * Test that a path outside the allowed format is refused.
-	 *
-	 * Only letters, numbers, hyphens, underscores and `/` separators survive —
-	 * anything else would never match a request path on the way in.
+	 * A path with a space in it is refused. Only letters, numbers, hyphens,
+	 * underscores and slashes are allowed, because anything else would not
+	 * match a request path.
 	 */
 	#[Test]
 	public function testAPathOutsideTheAllowedFormatIsRefused(): void
@@ -129,7 +117,8 @@ final class AdminLocationTest extends TestCase
 	}
 
 	/**
-	 * Test that equality is based on the value, not on identity.
+	 * Two locations are the same if their host and path are the same, even
+	 * if written with different spacing or capital letters.
 	 */
 	#[Test]
 	public function testEqualsComparesHostAndPath(): void

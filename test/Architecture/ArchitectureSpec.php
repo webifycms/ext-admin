@@ -19,18 +19,18 @@ use PHPat\Test\Builder\Rule;
 use PHPat\Test\PHPat;
 
 /**
- * Architecture tests for the admin extension.
+ * Rules for how the pieces of the extension may depend on each other.
  *
- * The extension only has two layers: Domain (the admin location value object and its
- * exception) and Infrastructure (the controllers, providers and the administration
- * service). Domain is the innermost layer, so it must not reach up into Infrastructure.
+ * The extension has two parts: the inner part (the value object and its
+ * exception) must not reach into the outer part (the controllers, providers
+ * and services).
  *
  * @internal
  */
 final class ArchitectureSpec
 {
 	/**
-	 * Domain classes must not depend on Infrastructure.
+	 * The inner part must not depend on the outer part.
 	 */
 	public function testDomainDoesNotDependOnInfrastructure(): Rule
 	{
@@ -44,7 +44,7 @@ final class ArchitectureSpec
 	}
 
 	/**
-	 * All domain exception classes must extend \Exception.
+	 * Every exception in the inner part must be an exception.
 	 */
 	public function testDomainExceptionsExtendException(): Rule
 	{

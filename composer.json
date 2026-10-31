@@ -2,6 +2,7 @@
   "name": "webifycms/ext-admin",
   "description": "The WebifyCMS admin extension handles administration of the entire application.",
   "type": "webifycms-extension",
+  "license": "MIT",
   "authors": [
     {
       "name": "Mohammed Shifreen",
